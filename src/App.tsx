@@ -1,22 +1,18 @@
-import { Counter } from './components/counter';
+import { Button, Layout } from 'antd';
+import 'antd/dist/reset.css';
+import styles from './App.module.css';
 
-function App() {
-  const appEnv = import.meta.env.VITE_APP_ENV;
-  const appApi = import.meta.env.VITE_APP_API;
-  const userAuthTokenKey = import.meta.env.VITE_APP_USER_AUTH_TOKEN_KEY;
+const { Header } = Layout;
 
+export default function App() {
   return (
-    <>
-      <div style={{ padding: '10px', backgroundColor: '#f0f0f0', marginBottom: '20px' }}>
-        <h3>Environment Variables:</h3>
-        <div>VITE_APP_ENV: {appEnv}</div>
-        <div>VITE_APP_API: {appApi}</div>
-        <div>VITE_APP_USER_AUTH_TOKEN_KEY: {userAuthTokenKey}</div>
-      </div>
-
-      <Counter />
-    </>
+    <Layout>
+      <Header className={styles.header}>
+        <div className={styles.title}>My App</div>
+        <Button type="primary" onClick={() => alert('Clicked!')}>
+          Antd Button
+        </Button>
+      </Header>
+    </Layout>
   );
 }
-
-export default App;
