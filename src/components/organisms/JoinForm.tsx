@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
 
 const { Title } = Typography;
@@ -22,11 +23,9 @@ export default function JoinForm({ onSubmit }: JoinFormProps) {
   };
 
   return (
-    <Card style={{ width: 400 }}>
-      <Space direction="vertical" size="large" style={{ width: '100%' }}>
-        <Title level={2} style={{ textAlign: 'center', margin: 0 }}>
-          회원가입
-        </Title>
+    <StyledCard>
+      <StyledSpace direction="vertical" size="large">
+        <StyledTitle level={2}>회원가입</StyledTitle>
 
         <Form form={form} onFinish={handleSubmit} layout="vertical" autoComplete="off">
           <Form.Item
@@ -102,7 +101,20 @@ export default function JoinForm({ onSubmit }: JoinFormProps) {
             </Button>
           </Form.Item>
         </Form>
-      </Space>
-    </Card>
+      </StyledSpace>
+    </StyledCard>
   );
 }
+
+const StyledCard = styled(Card)`
+  width: 600px;
+`;
+
+const StyledSpace = styled(Space)`
+  width: 100%;
+`;
+
+const StyledTitle = styled(Title)`
+  text-align: center;
+  margin: 0 !important;
+`;
