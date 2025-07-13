@@ -1,18 +1,12 @@
-import { Button, Layout } from 'antd';
-import 'antd/dist/reset.css';
-import styles from './App.module.css';
+import Layout from './components/layout/Layout';
+import Router from './Router';
 
-const { Header } = Layout;
-
-export default function App() {
+const App = () => {
   return (
     <Layout>
-      <Header className={styles.header}>
-        <div className={styles.title}>My App</div>
-        <Button type="primary" onClick={() => alert('Clicked!')}>
-          Antd Button
-        </Button>
-      </Header>
+      <Router />
     </Layout>
   );
-}
+};
+
+export default App;
