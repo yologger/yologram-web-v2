@@ -1,3 +1,4 @@
+import styled from '@emotion/styled';
 import React, { useState } from 'react';
 
 export const Counter: React.FC = () => {
@@ -12,11 +13,15 @@ export const Counter: React.FC = () => {
   };
 
   return (
-    <div>
+    <Container>
       <h2>Counter</h2>
       <div>{count}</div>
       <button onClick={decrement}>-</button>
       <button onClick={increment}>+</button>
-    </div>
+    </Container>
   );
 };
+
+const Container = styled.div`
+  background-color: #fff3de;
+`;

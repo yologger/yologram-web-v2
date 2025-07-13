@@ -1,5 +1,5 @@
 const JoinPage = () => {
-  return <div>JoinPage</div>;
+  return <div>Join Page</div>;
 };
 
 export default JoinPage;

@@ -1,10 +1,10 @@
 import { Global } from '@emotion/react';
-import Layout from './components/layout/Layout';
+import Layout from './components/templates/Layout';
 import Router from './Router';
 import { global } from './styles/global';
 import { reset } from './styles/reset';
 
-const App = () => {
+export default function App() {
   return (
     <>
       <Global styles={reset} />
@@ -14,6 +14,4 @@ const App = () => {
       </Layout>
     </>
   );
-};
-
-export default App;
+}
