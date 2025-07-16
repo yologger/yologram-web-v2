@@ -67,10 +67,26 @@ const StyledCard = styled(Card)`
   max-width: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const StyledSpace = styled(Space)`
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const StyledTitle = styled(Title)`

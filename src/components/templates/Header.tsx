@@ -1,12 +1,13 @@
-import { SettingOutlined } from '@ant-design/icons';
+import { MenuOutlined, SettingOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { Button, Modal } from 'antd';
+import { Button, Drawer, Modal } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
-  const isLoggedIn = true;
+  const isLoggedIn = false;
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     setIsLogoutModalOpen(true);
@@ -22,45 +23,93 @@ export default function Header() {
     setIsLogoutModalOpen(false);
   };
 
+  const handleMobileMenuOpen = () => {
+    setIsMobileMenuOpen(true);
+  };
+
+  const handleMobileMenuClose = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  const renderNavigationLinks = () => (
+    <>
+      <Link to="/">
+        <Button type="text" block>
+          Home
+        </Button>
+      </Link>
+      <Link to="/board/new">
+        <Button type="text" block>
+          Write
+        </Button>
+      </Link>
+    </>
+  );
+
+  const renderAuthButtons = () => (
+    <>
+      {isLoggedIn ? (
+        <>
+          <Button type="default" onClick={handleLogout} block>
+            Logout
+          </Button>
+          <Link to="/settings">
+            <Button type="primary" icon={<SettingOutlined />} block />
+          </Link>
+        </>
+      ) : (
+        <>
+          <Link to="/join">
+            <Button type="primary" block>
+              Join
+            </Button>
+          </Link>
+          <Link to="/login">
+            <Button type="default" block>
+              Login
+            </Button>
+          </Link>
+        </>
+      )}
+    </>
+  );
+
   return (
     <>
       <Container>
         <Section>
           <LogoLink to="/">Yologram</LogoLink>
-          <Links>
-            <Link to="/">
-              <Button type="text">Home</Button>
-            </Link>
-            <Link to="/board/new">
-              <Button type="text">Write</Button>
-            </Link>
-          </Links>
+          <DesktopLinks>{renderNavigationLinks()}</DesktopLinks>
         </Section>
 
         <Section>
-          <Links>
-            {isLoggedIn ? (
-              <>
-                <Button type="default" onClick={handleLogout}>
-                  Logout
-                </Button>
-                <Link to="/settings">
-                  <Button type="primary" icon={<SettingOutlined />} />
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link to="/join">
-                  <Button type="primary">Join</Button>
-                </Link>
-                <Link to="/login">
-                  <Button type="default">Login</Button>
-                </Link>
-              </>
-            )}
-          </Links>
+          <DesktopLinks>{renderAuthButtons()}</DesktopLinks>
+          <MobileMenuButton>
+            <Button type="text" icon={<MenuOutlined />} onClick={handleMobileMenuOpen} />
+          </MobileMenuButton>
         </Section>
       </Container>
+
+      {/* Mobile Menu Drawer */}
+      <Drawer
+        // title="메뉴"
+        placement="left"
+        onClose={handleMobileMenuClose}
+        open={isMobileMenuOpen}
+        width="80%"
+      >
+        <MobileMenuContainer>
+          <MobileMenuSection>
+            <MobileMenuTitle>메뉴</MobileMenuTitle>
+            {renderNavigationLinks()}
+          </MobileMenuSection>
+
+          <MobileMenuSection>
+            <MobileMenuTitle>계정</MobileMenuTitle>
+            {renderAuthButtons()}
+          </MobileMenuSection>
+        </MobileMenuContainer>
+      </Drawer>
 
       <Modal
         title="로그아웃"
@@ -105,7 +154,40 @@ const LogoLink = styled(Link)`
   }
 `;
 
-const Links = styled.nav`
+const DesktopLinks = styled.nav`
   display: flex;
   gap: 24px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const MobileMenuButton = styled.div`
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const MobileMenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+`;
+
+const MobileMenuSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
+const MobileMenuTitle = styled.h3`
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 8px;
 `;

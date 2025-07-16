@@ -124,10 +124,26 @@ export default function JoinForm({ onSubmit, onCancel }: JoinFormProps) {
 
 const StyledCard = styled(Card)`
   width: 600px;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const StyledSpace = styled(Space)`
   width: 100%;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const StyledTitle = styled(Title)`
