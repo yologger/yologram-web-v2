@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import Header from './Header';
 
 interface LayoutProps {
@@ -5,9 +6,15 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const location = useLocation();
+
+  // Header를 숨길 페이지들의 경로
+  const hideHeaderPaths = ['/join', '/login', '/board/new'];
+  const shouldHideHeader = hideHeaderPaths.includes(location.pathname);
+
   return (
     <>
-      <Header />
+      {!shouldHideHeader && <Header />}
       <div>{children}</div>
     </>
   );

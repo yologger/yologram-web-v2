@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 import JoinForm from '../components/organisms/JoinForm';
 
 interface JoinFormValues {
@@ -10,14 +11,20 @@ interface JoinFormValues {
 }
 
 const JoinPage = () => {
+  const navigate = useNavigate();
+
   const handleSubmit = (values: JoinFormValues) => {
     console.log('Join form values:', values);
     // 여기에 회원가입 로직 추가
   };
 
+  const handleCancel = () => {
+    navigate('/');
+  };
+
   return (
     <Container>
-      <JoinForm onSubmit={handleSubmit} />
+      <JoinForm onSubmit={handleSubmit} onCancel={handleCancel} />
     </Container>
   );
 };

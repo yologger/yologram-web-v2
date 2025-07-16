@@ -13,13 +13,19 @@ interface JoinFormValues {
 
 interface JoinFormProps {
   onSubmit: (values: JoinFormValues) => void;
+  onCancel: () => void;
 }
 
-export default function JoinForm({ onSubmit }: JoinFormProps) {
+export default function JoinForm({ onSubmit, onCancel }: JoinFormProps) {
   const [form] = Form.useForm<JoinFormValues>();
 
   const handleSubmit = (values: JoinFormValues) => {
     onSubmit(values);
+  };
+
+  const handleCancel = () => {
+    form.resetFields();
+    onCancel();
   };
 
   return (
@@ -95,10 +101,20 @@ export default function JoinForm({ onSubmit }: JoinFormProps) {
             <Input.Password placeholder="비밀번호를 다시 입력해주세요" />
           </Form.Item>
 
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block size="large">
-              회원가입
-            </Button>
+          <Form.Item style={{ marginBottom: 0, textAlign: 'center' }}>
+            <ButtonGroup>
+              <Button
+                type="default"
+                size="large"
+                onClick={handleCancel}
+                style={{ minWidth: '120px' }}
+              >
+                취소
+              </Button>
+              <Button type="primary" htmlType="submit" size="large" style={{ minWidth: '120px' }}>
+                회원가입
+              </Button>
+            </ButtonGroup>
           </Form.Item>
         </Form>
       </StyledSpace>
@@ -117,4 +133,10 @@ const StyledSpace = styled(Space)`
 const StyledTitle = styled(Title)`
   text-align: center;
   margin: 0 !important;
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 16px;
+  justify-content: center;
 `;

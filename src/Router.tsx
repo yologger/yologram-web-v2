@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage';
 import JoinPage from './pages/JoinPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+import SettingsPage from './pages/Settings';
 import TestPage from './pages/TestPage';
 
 export default function Router() {
@@ -16,6 +17,7 @@ export default function Router() {
       <Route path="/board/new" element={<BoardNewPage />} />
       <Route path="/test" element={<TestPage />} />
       <Route path="/antd" element={<AntdPage />} />
+      <Route path="/settings" element={<SettingsPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );

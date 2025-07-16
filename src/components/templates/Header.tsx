@@ -1,33 +1,79 @@
+import { SettingOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
-  return (
-    <Container>
-      <Section>
-        <LogoLink to="/">Yologram</LogoLink>
-        <Links>
-          <Link to="/">
-            <Button type="text">Home</Button>
-          </Link>
-          <Link to="/board/new">
-            <Button type="text">Write</Button>
-          </Link>
-        </Links>
-      </Section>
+  const isLoggedIn = true;
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
-      <Section>
-        <Links>
-          <Link to="/join">
-            <Button type="primary">Join</Button>
-          </Link>
-          <Link to="/login">
-            <Button type="default">Login</Button>
-          </Link>
-        </Links>
-      </Section>
-    </Container>
+  const handleLogout = () => {
+    setIsLogoutModalOpen(true);
+  };
+
+  const handleLogoutConfirm = () => {
+    // TODO: Implement actual logout logic
+    console.log('User logged out');
+    setIsLogoutModalOpen(false);
+  };
+
+  const handleLogoutCancel = () => {
+    setIsLogoutModalOpen(false);
+  };
+
+  return (
+    <>
+      <Container>
+        <Section>
+          <LogoLink to="/">Yologram</LogoLink>
+          <Links>
+            <Link to="/">
+              <Button type="text">Home</Button>
+            </Link>
+            <Link to="/board/new">
+              <Button type="text">Write</Button>
+            </Link>
+          </Links>
+        </Section>
+
+        <Section>
+          <Links>
+            {isLoggedIn ? (
+              <>
+                <Button type="default" onClick={handleLogout}>
+                  Logout
+                </Button>
+                <Link to="/settings">
+                  <Button type="primary" icon={<SettingOutlined />} />
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/join">
+                  <Button type="primary">Join</Button>
+                </Link>
+                <Link to="/login">
+                  <Button type="default">Login</Button>
+                </Link>
+              </>
+            )}
+          </Links>
+        </Section>
+      </Container>
+
+      <Modal
+        title="로그아웃"
+        open={isLogoutModalOpen}
+        onOk={handleLogoutConfirm}
+        onCancel={handleLogoutCancel}
+        okText="로그아웃"
+        cancelText="취소"
+        centered
+      >
+        <p>정말 로그아웃하시겠습니까?</p>
+      </Modal>
+    </>
   );
 }
 
