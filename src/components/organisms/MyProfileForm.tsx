@@ -16,7 +16,7 @@ interface UpdateProfileFormProps {
   initialValues?: ProfileFormData;
 }
 
-const ProfileForm = ({
+const MyProfileForm = ({
   onSave,
   onPasswordChange,
   loading = false,
@@ -90,7 +90,7 @@ const ProfileForm = ({
 
 const StyledCard = styled(Card)`
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
 
@@ -126,4 +126,4 @@ const ButtonGroup = styled.div`
   justify-content: center;
 `;
 
-export default ProfileForm;
+export default MyProfileForm;

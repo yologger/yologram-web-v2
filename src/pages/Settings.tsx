@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
-import ProfileForm from '../components/organisms/ProfileForm';
+import MyBoardList from '../components/organisms/MyBoardList';
+import MyProfileForm from '../components/organisms/MyProfileForm';
 
 interface ProfileFormData {
   email: string;
@@ -31,15 +32,21 @@ const SettingsPage = () => {
 
   return (
     <Container>
-      <ProfileForm onSave={handleSave} onPasswordChange={handlePasswordChange} loading={loading} />
+      <MyProfileForm
+        onSave={handleSave}
+        onPasswordChange={handlePasswordChange}
+        loading={loading}
+      />
+      <MyBoardList />
     </Container>
   );
 };
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
   min-height: 100vh;
   padding: 20px;
   background-color: #f5f5f5;
