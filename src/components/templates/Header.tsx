@@ -1,11 +1,11 @@
-import { MenuOutlined, SettingOutlined } from '@ant-design/icons';
+import { MenuOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Button, Drawer, Modal } from 'antd';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Header() {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -54,7 +54,9 @@ export default function Header() {
             Logout
           </Button>
           <Link to="/settings">
-            <Button type="primary" icon={<SettingOutlined />} block />
+            <Button type="primary" block>
+              Settings
+            </Button>
           </Link>
         </>
       ) : (

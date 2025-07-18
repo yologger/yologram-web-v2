@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
-import { Spin } from 'antd';
 import { useCallback, useState } from 'react';
-import InfiniteScroll from 'react-infinite-scroller';
-import BoardItem from '../components/organisms/BoardItem';
+import BoardList from '../components/organisms/BoardList';
 
 interface BoardData {
   id: number;
@@ -84,23 +82,7 @@ export default function HomePage() {
 
   return (
     <Container>
-      <InfiniteScroll
-        pageStart={1}
-        loadMore={loadMore}
-        hasMore={hasMore}
-        loader={
-          <LoadingContainer key="loading">
-            <Spin size="large" />
-          </LoadingContainer>
-        }
-        threshold={100}
-      >
-        {boardData.map((item) => (
-          <BoardItem key={item.id} {...item} />
-        ))}
-      </InfiniteScroll>
-
-      {!hasMore && boardData.length > 0 && <EndMessage>모든 게시글을 불러왔습니다.</EndMessage>}
+      <BoardList boardData={boardData} hasMore={hasMore} loadMore={loadMore} />;
     </Container>
   );
 }
@@ -115,20 +97,7 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     padding: 0;
+    align-items: flex-start;
     background-color: #ffffff;
   }
-`;
-
-const LoadingContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px 0;
-`;
-
-const EndMessage = styled.div`
-  text-align: center;
-  padding: 20px 0;
-  color: #8c8c8c;
-  font-size: 14px;
 `;
