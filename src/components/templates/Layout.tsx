@@ -9,7 +9,7 @@ const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
 
   // Header를 숨길 페이지들의 경로
-  const hideHeaderPaths = ['/join', '/login', '/boards/new'];
+  const hideHeaderPaths = ['/join', '/login', '/boards/new', '/change-password'];
   const shouldHideHeader = hideHeaderPaths.includes(location.pathname);
 
   return (

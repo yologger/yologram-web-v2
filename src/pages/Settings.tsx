@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import MyBoardList from '../components/organisms/MyBoardList';
 import MyProfileForm from '../components/organisms/MyProfileForm';
 
@@ -11,6 +12,7 @@ interface ProfileFormData {
 
 const SettingsPage = () => {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleSave = async (values: ProfileFormData) => {
     setLoading(true);
@@ -26,8 +28,7 @@ const SettingsPage = () => {
   };
 
   const handlePasswordChange = () => {
-    // TODO: 비밀번호 변경 페이지로 이동 또는 모달 열기
-    console.log('비밀번호 변경');
+    navigate('/change-password');
   };
 
   return (
