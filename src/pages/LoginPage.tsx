@@ -31,7 +31,7 @@ const LoginPage = () => {
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   min-height: 100vh;
   padding: 20px;
   background-color: #f5f5f5;

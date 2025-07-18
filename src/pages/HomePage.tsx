@@ -106,9 +106,17 @@ export default function HomePage() {
 }
 
 const Container = styled.div`
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f5f5f5;
+
+  @media (max-width: 768px) {
+    padding: 0;
+    background-color: #ffffff;
+  }
 `;
 
 const LoadingContainer = styled.div`

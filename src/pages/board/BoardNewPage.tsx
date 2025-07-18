@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import BoardNewForm from '../components/organisms/BoardNewForm';
+import BoardNewForm from '../../components/organisms/BoardNewForm';
 
 interface BoardFormValues {
   title: string;
@@ -31,7 +31,7 @@ const BoardNewPage = () => {
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   min-height: 100vh;
   padding: 20px;
   background-color: #f5f5f5;

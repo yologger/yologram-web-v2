@@ -123,7 +123,10 @@ export default function JoinForm({ onSubmit, onCancel }: JoinFormProps) {
 }
 
 const StyledCard = styled(Card)`
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 
   @media (max-width: 768px) {
     max-width: 100%;

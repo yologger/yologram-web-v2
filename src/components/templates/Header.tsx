@@ -38,7 +38,7 @@ export default function Header() {
           Home
         </Button>
       </Link>
-      <Link to="/board/new">
+      <Link to="/boards/new">
         <Button type="text" block>
           Write
         </Button>
