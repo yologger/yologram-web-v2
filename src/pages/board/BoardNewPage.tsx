@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import BoardNewForm from '../../components/organisms/BoardNewForm';
+import BoardNewForm from '../../components/board/BoardNewForm';
 
 interface BoardFormValues {
   title: string;

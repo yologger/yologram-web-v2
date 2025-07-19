@@ -1,7 +1,14 @@
 import styled from '@emotion/styled';
-import { useCallback, useState } from 'react';
-import BoardList from '../components/board/BoardList';
+import { Card, List, Pagination, Space, Spin } from 'antd';
+import { useEffect, useState } from 'react';
 import type { Board } from '../models/board.model';
+import BoardItem from './board/BoardItem';
+
+// const { Title } = Typography;
+
+interface IProps {
+  pageSize?: number;
+}
 
 // Mock data generator
 const generateMockData = (page: number, pageSize: number): Board[] => {
@@ -32,57 +39,127 @@ const generateMockData = (page: number, pageSize: number): Board[] => {
   return boardList;
 };
 
-export default function HomePage() {
+const MyBoardList = ({ pageSize = 5 }: IProps) => {
   const [boardList, setBoardList] = useState<Board[]>([]);
-  const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [total, setTotal] = useState(0);
 
-  const loadMore = useCallback(
-    async (pageNum: number) => {
-      if (loading) return;
+  const loadData = async (page: number) => {
+    setLoading(true);
+    try {
+      // Simulate API delay
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
-      setLoading(true);
+      const newBoardList = generateMockData(page, pageSize);
+      setBoardList(newBoardList);
 
-      try {
-        // Simulate API delay
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+      // Set total to 100 for demo purposes
+      setTotal(100);
+    } catch (error) {
+      console.error('Failed to load data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        const pageSize = 10;
-        const newData = generateMockData(pageNum, pageSize);
+  useEffect(() => {
+    loadData(currentPage);
+  }, [currentPage, pageSize]);
 
-        setBoardList((prev) => [...prev, ...newData]);
-
-        // Stop loading more when we reach 100 items
-        if (pageNum * pageSize >= 100) {
-          setHasMore(false);
-        }
-      } catch (error) {
-        console.error('Failed to load more data:', error);
-      } finally {
-        setLoading(false);
-      }
-    },
-    [loading],
-  );
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   return (
     <Container>
-      <BoardList boardList={boardList} hasMore={hasMore} loadMore={loadMore} />
+      <StyledSpace direction="vertical" size="large">
+        {/* <StyledTitle level={2}>내 게시글</StyledTitle> */}
+
+        {loading ? (
+          <LoadingContainer>
+            <Spin size="large" />
+          </LoadingContainer>
+        ) : (
+          <>
+            <List
+              dataSource={boardList}
+              renderItem={(item) => (
+                <List.Item style={{ padding: 0, border: 'none' }}>
+                  <BoardItem board={item} />
+                </List.Item>
+              )}
+              locale={{
+                emptyText: '작성한 게시글이 없습니다.',
+              }}
+            />
+
+            {total > 0 && (
+              <PaginationContainer>
+                <Pagination
+                  current={currentPage}
+                  total={total}
+                  pageSize={pageSize}
+                  onChange={handlePageChange}
+                  showSizeChanger={false}
+                />
+              </PaginationContainer>
+            )}
+          </>
+        )}
+      </StyledSpace>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 100vh;
-  padding: 20px;
-  background-color: #f5f5f5;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 8px;
+`;
+
+const StyledCard = styled(Card)`
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  margin-top: 20px;
 
   @media (max-width: 768px) {
-    padding: 0;
-    align-items: flex-start;
-    background-color: #f5f5f5;
+    max-width: 100%;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+    margin-top: 0;
   }
 `;
+
+const StyledSpace = styled(Space)`
+  width: 100%;
+
+  @media (max-width: 768px) {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+// const StyledTitle = styled(Title)`
+//   text-align: center;
+//   margin: 0 !important;
+// `;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+`;
+
+const PaginationContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+export default MyBoardList;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button } from 'antd';
-import { Counter } from '../components/test/Counter';
+import { Counter } from '../../components/test/Counter';
 
 const TestPage = () => {
   return (

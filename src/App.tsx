@@ -1,7 +1,7 @@
 import { Global } from '@emotion/react';
 import { ConfigProvider } from 'antd';
 import koKR from 'antd/locale/ko_KR';
-import Layout from './components/templates/Layout';
+import Layout from './components/common/Layout';
 import Router from './Router';
 import { global } from './styles/global';
 import { reset } from './styles/reset';

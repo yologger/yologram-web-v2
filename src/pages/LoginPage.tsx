@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import LoginForm from '../components/organisms/LoginForm';
+import LoginForm from '../components/user/LoginForm';
 
 interface LoginFormValues {
   email: string;

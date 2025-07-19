@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import ChangePasswordForm from '../components/organisms/ChangePasswordForm';
+import ChangePasswordForm from '../../components/ChangePasswordForm';
 
 interface ChangePasswordFormValues {
   currentPassword: string;

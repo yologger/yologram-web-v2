@@ -6,64 +6,50 @@ import {
 } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Avatar, Card, Space, Tag, Typography } from 'antd';
+import Title from 'antd/es/typography/Title';
+import type { Board } from '../../models/board.model';
 
 const { Text, Paragraph } = Typography;
 
-interface BoardItemProps {
-  author: {
-    name: string;
-    avatar: string;
-  };
-  content: string;
-  createdAt: string;
-  categories: string[];
-  tags: string[];
-  stats: {
-    views: number;
-    likes: number;
-    comments: number;
-  };
+interface IProps {
+  board: Board;
 }
 
-export default function BoardItem({
-  author,
-  content,
-  createdAt,
-  categories,
-  tags,
-  stats,
-}: BoardItemProps) {
+export default function BoardItem({ board }: IProps) {
   return (
     <StyledCard>
       {/* Header Section */}
       <HeaderSection>
         <Space>
-          <Avatar size={40} src={author.avatar} />
-          <div>
-            <AuthorName>{author.name}</AuthorName>
-            <TimeInfo>
-              <ClockCircleOutlined style={{ marginRight: 4 }} />
-              {createdAt}
-            </TimeInfo>
-          </div>
+          <Avatar size={20} src={board.author.avatar} />
+          <AuthorName>{board.author.name}</AuthorName>
+          <TimeInfo>
+            <ClockCircleOutlined style={{ marginRight: 4 }} />
+            {board.createdAt}
+          </TimeInfo>
         </Space>
       </HeaderSection>
 
       {/* Content Section */}
       <ContentSection>
-        <Paragraph ellipsis={{ rows: 3, expandable: true, symbol: '더보기' }}>{content}</Paragraph>
+        <Title level={4} ellipsis={{ rows: 1 }}>
+          {board.title}
+        </Title>
+        <StyledParagraph ellipsis={{ rows: 2, expandable: true, symbol: '더보기' }}>
+          {board.content}
+        </StyledParagraph>
       </ContentSection>
 
       {/* Footer Section */}
       <FooterSection>
         <LeftSection>
           <Space wrap>
-            {categories.map((category) => (
+            {board.categories.map((category) => (
               <Tag key={category} color="blue">
                 {category}
               </Tag>
             ))}
-            {tags.map((tag) => (
+            {board.tags.map((tag) => (
               <Tag key={tag} color="default">
                 #{tag}
               </Tag>
@@ -75,15 +61,15 @@ export default function BoardItem({
           <Space size="large">
             <StatItem>
               <EyeOutlined />
-              <Text type="secondary">{stats.views}</Text>
+              <Text type="secondary">{board.stats.views}</Text>
             </StatItem>
             <StatItem>
               <HeartOutlined />
-              <Text type="secondary">{stats.likes}</Text>
+              <Text type="secondary">{board.stats.likes}</Text>
             </StatItem>
             <StatItem>
               <MessageOutlined />
-              <Text type="secondary">{stats.comments}</Text>
+              <Text type="secondary">{board.stats.comments}</Text>
             </StatItem>
           </Space>
         </RightSection>
@@ -93,9 +79,9 @@ export default function BoardItem({
 }
 
 const StyledCard = styled(Card)`
+  width: 100%;
   margin-bottom: 16px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -122,6 +108,10 @@ const TimeInfo = styled.div`
 
 const ContentSection = styled.div`
   margin-bottom: 16px;
+`;
+
+const StyledParagraph = styled(Paragraph)`
+  color: #8c8c8c;
 `;
 
 const FooterSection = styled.div`

@@ -31,7 +31,7 @@ const MyProfileForm = ({
   return (
     <StyledCard>
       <StyledSpace direction="vertical" size="large">
-        <StyledTitle level={2}>프로필 설정</StyledTitle>
+        {/* <StyledTitle level={2}>프로필 설정</StyledTitle> */}
 
         <Form form={form} layout="vertical" onFinish={onSave} initialValues={initialValues}>
           <Form.Item
@@ -99,7 +99,6 @@ const StyledCard = styled(Card)`
     border-radius: 0;
     box-shadow: none;
     border: none;
-    height: 100vh;
     display: flex;
     flex-direction: column;
   }

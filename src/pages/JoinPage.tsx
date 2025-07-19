@@ -1,20 +1,13 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import JoinForm from '../components/organisms/JoinForm';
-
-interface JoinFormValues {
-  email: string;
-  name: string;
-  nickname: string;
-  password: string;
-  confirmPassword: string;
-}
+import JoinForm from '../components/user/JoinForm';
+import type { JoinData } from '../models/user.model';
 
 const JoinPage = () => {
   const navigate = useNavigate();
 
-  const handleSubmit = (values: JoinFormValues) => {
-    console.log('Join form values:', values);
+  const handleSubmit = (data: JoinData) => {
+    console.log('Join form values:', data);
     // 여기에 회원가입 로직 추가
   };
 

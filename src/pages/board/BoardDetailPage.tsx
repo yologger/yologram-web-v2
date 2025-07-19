@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Modal, message } from 'antd';
 import { useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import BoardDetailCard from '../../components/organisms/BoardDetailCard';
+import BoardDetailCard from '../../components/board/BoardDetailCard';
 import type { BoardData } from '../../types/board';
 
 const BoardDetailPage = () => {

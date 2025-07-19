@@ -1,8 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyBoardList from '../components/organisms/MyBoardList';
-import MyProfileForm from '../components/organisms/MyProfileForm';
+import MyProfileForm from '../../components/MyProfileForm';
 
 interface ProfileFormData {
   email: string;
@@ -10,7 +9,7 @@ interface ProfileFormData {
   nickname: string;
 }
 
-const SettingsPage = () => {
+const EditProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -38,10 +37,11 @@ const SettingsPage = () => {
         onPasswordChange={handlePasswordChange}
         loading={loading}
       />
-      <MyBoardList />
     </Container>
   );
 };
+
+export default EditProfilePage;
 
 const Container = styled.div`
   display: flex;
@@ -58,5 +58,3 @@ const Container = styled.div`
     background-color: #ffffff;
   }
 `;
-
-export default SettingsPage;

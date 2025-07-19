@@ -1,25 +1,18 @@
 import styled from '@emotion/styled';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
+import type { JoinData } from '../../models/user.model';
 
 const { Title } = Typography;
 
-interface JoinFormValues {
-  email: string;
-  name: string;
-  nickname: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface JoinFormProps {
-  onSubmit: (values: JoinFormValues) => void;
+interface IProps {
+  onSubmit: (data: JoinData) => void;
   onCancel: () => void;
 }
 
-export default function JoinForm({ onSubmit, onCancel }: JoinFormProps) {
-  const [form] = Form.useForm<JoinFormValues>();
+export default function JoinForm({ onSubmit, onCancel }: IProps) {
+  const [form] = Form.useForm<JoinData>();
 
-  const handleSubmit = (values: JoinFormValues) => {
+  const handleSubmit = (values: JoinData) => {
     onSubmit(values);
   };
 
@@ -33,7 +26,19 @@ export default function JoinForm({ onSubmit, onCancel }: JoinFormProps) {
       <StyledSpace direction="vertical" size="large">
         <StyledTitle level={2}>회원가입</StyledTitle>
 
-        <Form form={form} onFinish={handleSubmit} layout="vertical" autoComplete="off">
+        <Form
+          form={form}
+          onFinish={handleSubmit}
+          layout="vertical"
+          initialValues={{
+            email: 'user@example.com',
+            name: '홍길동',
+            nickname: '길동이',
+            password: '1234Abcd!@',
+            confirmPassword: '1234Abcd!@',
+          }}
+          autoComplete="off"
+        >
           <Form.Item
             label="이메일"
             name="email"

@@ -1,15 +1,15 @@
 import { Route, Routes } from 'react-router-dom';
-import AntdPage from './pages/AntdPage';
 import BoardDetailPage from './pages/board/BoardDetailPage';
 import BoardEditPage from './pages/board/BoardEditPage';
 import BoardNewPage from './pages/board/BoardNewPage';
-import ChangePasswordPage from './pages/ChangePasswordPage';
 import HomePage from './pages/HomePage';
 import JoinPage from './pages/JoinPage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
-import SettingsPage from './pages/Settings';
-import TestPage from './pages/TestPage';
+import ChangePasswordPage from './pages/settings/ChangePasswordPage';
+import SettingsPage from './pages/settings/Settings';
+import AntdPage from './pages/test/AntdPage';
+import TestPage from './pages/test/TestPage';
 
 export default function Router() {
   console.log('Router component rendered');

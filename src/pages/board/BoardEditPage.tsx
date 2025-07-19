@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Modal, message } from 'antd';
 import { useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import BoardEditForm from '../../components/organisms/BoardEditForm';
+import BoardEditForm from '../../components/board/BoardEditForm';
 
 const BoardEditPage = () => {
   const { id } = useParams();
