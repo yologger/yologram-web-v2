@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Button, Result } from 'antd';
-import { Component, ErrorInfo, ReactNode } from 'react';
+import type { ErrorInfo, ReactNode } from 'react';
+import { Component } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -59,7 +60,7 @@ class ErrorBoundary extends Component<Props, State> {
               </Button>,
             ]}
           />
-          {process.env.NODE_ENV === 'development' && this.state.error && (
+          {import.meta.env.MODE === 'development' && this.state.error && (
             <ErrorDetails>
               <h4>개발 모드 - 에러 상세 정보:</h4>
               <pre>{this.state.error.toString()}</pre>
