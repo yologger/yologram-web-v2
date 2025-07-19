@@ -1,14 +1,28 @@
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import type { JoinData } from '../apis/auth';
 import JoinForm from '../components/user/JoinForm';
-import type { JoinData } from '../models/user.model';
+import { useJoin } from '../queries/useJoin.mutation';
 
 const JoinPage = () => {
   const navigate = useNavigate();
+  const { mutate, isPending, isError, isSuccess, data, error } = useJoin();
 
-  const handleSubmit = (data: JoinData) => {
-    console.log('Join form values:', data);
-    // 여기에 회원가입 로직 추가
+  useEffect(() => {
+    if (isSuccess && data) {
+      console.log('회원가입 성공 데이터:', data);
+    }
+  }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (isError && error) {
+      console.log('회원가입 실패 데이터:', error.response.data);
+    }
+  }, [isError, error]);
+
+  const handleSubmit = (joinData: JoinData) => {
+    mutate(joinData);
   };
 
   const handleCancel = () => {
@@ -16,24 +30,23 @@ const JoinPage = () => {
   };
 
   return (
-    <Container>
-      <JoinForm onSubmit={handleSubmit} onCancel={handleCancel} />
-    </Container>
+    <PageContainer>
+      <JoinForm onSubmit={handleSubmit} onCancel={handleCancel} loading={isPending} />
+    </PageContainer>
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+const PageContainer = styled.div`
   min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
   background-color: #f5f5f5;
 
   @media (max-width: 768px) {
     padding: 0;
-    align-items: flex-start;
-    background-color: #ffffff;
+    background-color: white;
   }
 `;
 

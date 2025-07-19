@@ -1,15 +1,16 @@
 import styled from '@emotion/styled';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
-import type { JoinData } from '../../models/user.model';
+import type { JoinData } from '../../apis/auth';
 
 const { Title } = Typography;
 
 interface IProps {
   onSubmit: (data: JoinData) => void;
   onCancel: () => void;
+  loading?: boolean;
 }
 
-export default function JoinForm({ onSubmit, onCancel }: IProps) {
+export default function JoinForm({ onSubmit, onCancel, loading = false }: IProps) {
   const [form] = Form.useForm<JoinData>();
 
   const handleSubmit = (values: JoinData) => {
@@ -31,9 +32,9 @@ export default function JoinForm({ onSubmit, onCancel }: IProps) {
           onFinish={handleSubmit}
           layout="vertical"
           initialValues={{
-            email: 'user@example.com',
-            name: '홍길동',
-            nickname: '길동이',
+            email: 'tester1000@example.com',
+            name: 'tester1000',
+            nickname: 'tester1000',
             password: '1234Abcd!@',
             confirmPassword: '1234Abcd!@',
           }}
@@ -112,11 +113,18 @@ export default function JoinForm({ onSubmit, onCancel }: IProps) {
                 type="default"
                 size="large"
                 onClick={handleCancel}
+                disabled={loading}
                 style={{ minWidth: '120px' }}
               >
                 취소
               </Button>
-              <Button type="primary" htmlType="submit" size="large" style={{ minWidth: '120px' }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={loading}
+                style={{ minWidth: '120px' }}
+              >
                 회원가입
               </Button>
             </ButtonGroup>
