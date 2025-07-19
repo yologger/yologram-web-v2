@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
-import { join, type JoinRequest, type JoinResponse } from '../apis/ums';
+import { join, type JoinRequest, type JoinResponse } from '../../apis/ums';
 
 export const useJoin = () => {
   return useMutation<JoinResponse, AxiosError, JoinRequest>({

@@ -12,9 +12,6 @@ import AntdPage from './pages/test/AntdPage';
 import TestPage from './pages/test/TestPage';
 
 export default function Router() {
-  console.log('Router component rendered');
-  console.log('Current location:', window.location.pathname);
-
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

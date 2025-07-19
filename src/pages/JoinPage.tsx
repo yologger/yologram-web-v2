@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { JoinData } from '../apis/auth';
 import JoinForm from '../components/user/JoinForm';
-import { useJoin } from '../queries/useJoin.mutation';
+import { useJoin } from '../queries/ums/useJoin.mutation';
 
 const JoinPage = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const JoinPage = () => {
 
   useEffect(() => {
     if (isError && error) {
-      console.log('회원가입 실패 데이터:', error.response.data);
+      console.log('회원가입 실패 데이터:', error.response?.data);
     }
   }, [isError, error]);
 
