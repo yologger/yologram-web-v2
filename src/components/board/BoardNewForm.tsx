@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
-import { Button, Card, Form, Input, Space, Typography } from 'antd';
+import { Button, Card, Form, Input, Select, Space, Typography } from 'antd';
 
 const { Title } = Typography;
 const { TextArea } = Input;
+const { Option } = Select;
 
 interface BoardFormValues {
   title: string;
   content: string;
+  categories: string[];
+  tags: string[];
 }
 
 interface IProps {
@@ -20,6 +23,13 @@ const BoardNewForm = ({ onSubmit, onCancel }: IProps) => {
   const handleCancel = () => {
     form.resetFields();
     onCancel();
+  };
+
+  const handleTagChange = (values: string[]) => {
+    // 5개로 제한
+    if (values.length > 5) {
+      form.setFieldsValue({ tags: values.slice(0, 5) });
+    }
   };
 
   return (
@@ -48,6 +58,43 @@ const BoardNewForm = ({ onSubmit, onCancel }: IProps) => {
             ]}
           >
             <TextArea placeholder="게시글 내용을 입력하세요" rows={10} showCount maxLength={2000} />
+          </Form.Item>
+
+          <Form.Item
+            label="카테고리"
+            name="categories"
+            rules={[{ required: true, message: '카테고리를 선택해주세요' }]}
+          >
+            <Select mode="multiple" placeholder="카테고리를 선택하세요" size="large" allowClear>
+              <Option value="기술">기술</Option>
+              <Option value="일상">일상</Option>
+              <Option value="리뷰">리뷰</Option>
+              <Option value="공지">공지</Option>
+              <Option value="질문">질문</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item label="태그" name="tags">
+            <Select
+              mode="tags"
+              placeholder="#태그를 입력하거나 선택하세요 (최대 5개)"
+              size="large"
+              allowClear
+              maxTagCount={5}
+              style={{ width: '100%' }}
+              onChange={handleTagChange}
+            >
+              <Option value="java">java</Option>
+              <Option value="spring">spring</Option>
+              <Option value="oracle">oracle</Option>
+              <Option value="javascript">javascript</Option>
+              <Option value="react">react</Option>
+              <Option value="python">python</Option>
+              <Option value="typescript">typescript</Option>
+              <Option value="nodejs">nodejs</Option>
+              <Option value="html">html</Option>
+              <Option value="css">css</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item style={{ marginBottom: 0, textAlign: 'center' }}>

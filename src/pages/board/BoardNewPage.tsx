@@ -5,6 +5,8 @@ import BoardNewForm from '../../components/board/BoardNewForm';
 interface BoardFormValues {
   title: string;
   content: string;
+  categories: string[];
+  tags: string[];
 }
 
 const BoardNewPage = () => {
