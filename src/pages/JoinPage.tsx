@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { JoinData } from '../apis/auth';
+
 import JoinForm from '../components/user/JoinForm';
+import type { JoinData } from '../models/user.model';
 import { useJoin } from '../queries/ums/useJoin.mutation';
 
 const JoinPage = () => {

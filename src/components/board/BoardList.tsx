@@ -1,11 +1,11 @@
 import styled from '@emotion/styled';
 import { Spin } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
-import type { Board } from '../../models/board.model';
+import type { BoardData } from '../../models/board.model';
 import BoardItem from './BoardItem';
 
 interface IProps {
-  boardList: Board[];
+  boardList: BoardData[];
   hasMore: boolean;
   loadMore: (pageNum: number) => void;
 }
@@ -25,7 +25,7 @@ export default function BoardList({ boardList, hasMore, loadMore }: IProps) {
         threshold={100}
       >
         {boardList.map((board) => (
-          <BoardItem key={board.id} board={board} />
+          <BoardItem key={board.bid} board={board} />
         ))}
       </InfiniteScroll>
 

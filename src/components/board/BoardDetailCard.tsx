@@ -9,12 +9,13 @@ import {
 } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Avatar, Button, Card, Divider, Space, Tag, Typography } from 'antd';
-import type { BoardData } from '../../types/board';
+import type { GetBoardResponse } from '../../apis/bms';
+import type { BoardData } from '../../models/board.model';
 
 const { Text, Paragraph, Title } = Typography;
 
 interface BoardDetailCardProps {
-  boardData: BoardData;
+  boardData: BoardData | GetBoardResponse;
   onBack: () => void;
   onEdit: () => void;
   onDelete: () => void;
@@ -62,12 +63,18 @@ const BoardDetailCard = ({ boardData, onBack, onEdit, onDelete }: BoardDetailCar
               {boardData.title}
             </Title>
             <Space>
-              <Avatar size={48} src={boardData.author.avatar} />
+              <Avatar
+                size={48}
+                src={boardData.writer?.avatar || undefined}
+                alt={boardData.writer?.name || 'User'}
+              >
+                {!boardData.writer?.avatar && boardData.writer?.name?.charAt(0)?.toUpperCase()}
+              </Avatar>
               <div>
-                <AuthorName>{boardData.author.name}</AuthorName>
+                <AuthorName>{boardData.writer?.name || 'Unknown User'}</AuthorName>
                 <TimeInfo>
                   <ClockCircleOutlined style={{ marginRight: 4 }} />
-                  {formatDate(boardData.createdAt)}
+                  {formatDate(boardData.createdDate)}
                 </TimeInfo>
               </div>
             </Space>
@@ -95,7 +102,7 @@ const BoardDetailCard = ({ boardData, onBack, onEdit, onDelete }: BoardDetailCar
                 Categories:
               </Text>
               <Space size="small">
-                {boardData.categories.map((category) => (
+                {(boardData.categories || ['카테고리1', '카테고리2']).map((category) => (
                   <Tag key={category} color="blue">
                     {category}
                   </Tag>
@@ -107,7 +114,7 @@ const BoardDetailCard = ({ boardData, onBack, onEdit, onDelete }: BoardDetailCar
                 Tags:
               </Text>
               <Space size="small">
-                {boardData.tags.map((tag) => (
+                {(boardData.tags || ['태그1', '태그2']).map((tag) => (
                   <Tag key={tag} color="default">
                     #{tag}
                   </Tag>
@@ -121,15 +128,15 @@ const BoardDetailCard = ({ boardData, onBack, onEdit, onDelete }: BoardDetailCar
           <Space size="large">
             <StatItem>
               <EyeOutlined />
-              <Text type="secondary">{boardData.stats.views}</Text>
+              <Text type="secondary">{boardData.metrics.viewCount}</Text>
             </StatItem>
             <StatItem>
               <HeartOutlined />
-              <Text type="secondary">{boardData.stats.likes}</Text>
+              <Text type="secondary">{boardData.metrics.likeCount}</Text>
             </StatItem>
             <StatItem>
               <MessageOutlined />
-              <Text type="secondary">{boardData.stats.comments}</Text>
+              <Text type="secondary">{boardData.metrics.commentCount}</Text>
             </StatItem>
           </Space>
         </RightSection>

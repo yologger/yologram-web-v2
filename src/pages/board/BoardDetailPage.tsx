@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { Modal, message } from 'antd';
-import { useState } from 'react';
+import { message, Modal, Spin } from 'antd';
+import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import BoardDetailCard from '../../components/board/BoardDetailCard';
-import type { BoardData } from '../../types/board';
+import { useGetBoard } from '../../queries/bms/getBoard.query';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
@@ -11,29 +11,26 @@ const BoardDetailPage = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
+  const bid = id ? parseInt(id) : 0;
+  const { data, isSuccess, isError, error } = useGetBoard(bid, {
+    enabled: !!id && /^\d+$/.test(id), // id가 존재하고, id가 숫자로만 구성된 문자열일 때만 API 호출을 실행
+  });
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      console.log('게시글 조회 성공 데이터:', data);
+    }
+  }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (isError && error) {
+      console.log('게시글 조회 실패 데이터:', error.response?.data);
+    }
+  }, [isError, error]);
+
   if (!id || !/^\d+$/.test(id)) {
     return <Navigate to="/notfound" replace />;
   }
-
-  // Mock data - in real app, you would fetch this based on the ID
-  const mockBoardData: BoardData = {
-    id: id,
-    title: 'Sample Board Title - This is a detailed view of the board post',
-    content:
-      'This is a sample board content. It can be very long and contain multiple paragraphs. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-    author: {
-      name: 'John Doe',
-      avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
-    },
-    createdAt: '2024-01-15T10:30:00Z',
-    categories: ['Technology', 'Programming'],
-    tags: ['React', 'TypeScript', 'Frontend', 'Web Development'],
-    stats: {
-      views: 1234,
-      likes: 56,
-      comments: 23,
-    },
-  };
 
   const handleEdit = () => {
     navigate(`/boards/${id}/edit`);
@@ -68,12 +65,18 @@ const BoardDetailPage = () => {
 
   return (
     <Container>
-      <BoardDetailCard
-        boardData={mockBoardData}
-        onBack={handleBack}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-      />
+      {data?.data ? (
+        <BoardDetailCard
+          boardData={data.data}
+          onBack={handleBack}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
+      ) : (
+        <LoadingContainer>
+          <Spin size="large" tip="게시글을 불러오는 중..." />
+        </LoadingContainer>
+      )}
 
       {/* Delete Confirmation Modal */}
       <Modal
@@ -103,6 +106,18 @@ const Container = styled.div`
 
   @media (max-width: 768px) {
     padding: 0;
+    background-color: #ffffff;
+  }
+`;
+
+const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+
+  @media (max-width: 768px) {
     background-color: #ffffff;
   }
 `;

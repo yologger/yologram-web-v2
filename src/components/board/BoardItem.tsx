@@ -7,12 +7,12 @@ import {
 import styled from '@emotion/styled';
 import { Avatar, Card, Space, Tag, Typography } from 'antd';
 import Title from 'antd/es/typography/Title';
-import type { Board } from '../../models/board.model';
+import type { BoardData } from '../../models/board.model';
 
 const { Text, Paragraph } = Typography;
 
 interface IProps {
-  board: Board;
+  board: BoardData;
 }
 
 export default function BoardItem({ board }: IProps) {
@@ -21,11 +21,11 @@ export default function BoardItem({ board }: IProps) {
       {/* Header Section */}
       <HeaderSection>
         <Space>
-          <Avatar size={20} src={board.author.avatar} />
-          <AuthorName>{board.author.name}</AuthorName>
+          <Avatar size={20} src={board.writer.avatar || undefined} />
+          <AuthorName>{board.writer.name}</AuthorName>
           <TimeInfo>
             <ClockCircleOutlined style={{ marginRight: 4 }} />
-            {board.createdAt}
+            {board.createdDate}
           </TimeInfo>
         </Space>
       </HeaderSection>
@@ -61,15 +61,15 @@ export default function BoardItem({ board }: IProps) {
           <Space size="large">
             <StatItem>
               <EyeOutlined />
-              <Text type="secondary">{board.stats.views}</Text>
+              <Text type="secondary">{board.metrics.viewCount}</Text>
             </StatItem>
             <StatItem>
               <HeartOutlined />
-              <Text type="secondary">{board.stats.likes}</Text>
+              <Text type="secondary">{board.metrics.likeCount}</Text>
             </StatItem>
             <StatItem>
               <MessageOutlined />
-              <Text type="secondary">{board.stats.comments}</Text>
+              <Text type="secondary">{board.metrics.commentCount}</Text>
             </StatItem>
           </Space>
         </RightSection>

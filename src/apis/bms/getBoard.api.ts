@@ -1,4 +1,6 @@
-export interface BoardData {
+import bmsAPI from '.';
+
+export type GetBoardResponse = {
   bid: number;
   title: string;
   content: string;
@@ -17,4 +19,9 @@ export interface BoardData {
     likeCount: number;
     viewCount: number;
   };
-}
+};
+
+export const getBoard = async (bid: number): Promise<GetBoardResponse> => {
+  const response = await bmsAPI.get<GetBoardResponse>(`/board/${bid}`);
+  return response.data;
+};
