@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import { message, Modal, Spin } from 'antd';
+import type { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import BoardDetailCard from '../../components/board/BoardDetailCard';
-import { useGetBoard } from '../../queries/bms/getBoard.query';
+import type { BoardData } from '../../models/board.model';
+import { useGetBoardQuery } from '../../queries/bms';
 
 const BoardDetailPage = () => {
   const { id } = useParams();
@@ -12,7 +14,17 @@ const BoardDetailPage = () => {
   const [deleteLoading, setDeleteLoading] = useState(false);
 
   const bid = id ? parseInt(id) : 0;
-  const { data, isSuccess, isError, error } = useGetBoard(bid, {
+  const {
+    data,
+    isSuccess,
+    isError,
+    error,
+  }: {
+    data: BoardData | undefined;
+    isSuccess: boolean;
+    isError: boolean;
+    error: AxiosError | null;
+  } = useGetBoardQuery(bid, {
     enabled: !!id && /^\d+$/.test(id), // id가 존재하고, id가 숫자로만 구성된 문자열일 때만 API 호출을 실행
   });
 
@@ -65,9 +77,9 @@ const BoardDetailPage = () => {
 
   return (
     <Container>
-      {data?.data ? (
+      {data ? (
         <BoardDetailCard
-          boardData={data.data}
+          boardData={data}
           onBack={handleBack}
           onEdit={handleEdit}
           onDelete={handleDelete}

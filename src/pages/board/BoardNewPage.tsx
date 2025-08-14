@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
+import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import BoardNewForm from '../../components/board/BoardNewForm';
+import { useCreateBoardMutation } from '../../queries/bms';
 
 interface BoardFormValues {
   title: string;
@@ -11,12 +13,26 @@ interface BoardFormValues {
 
 const BoardNewPage = () => {
   const navigate = useNavigate();
+  const { mutate: createBoard } = useCreateBoardMutation();
 
   const handleSubmit = (values: BoardFormValues) => {
     console.log('Board form values:', values);
-    // 여기에 게시글 작성 로직 추가
-    // 작성 완료 시 홈페이지로 이동
-    navigate('/');
+
+    const uid = 999;
+    createBoard(
+      { uid, title: values.title, content: values.content },
+      {
+        onSuccess: (data) => {
+          message.success('게시글이 성공적으로 작성되었습니다.');
+          console.log('게시글 작성 성공:', data);
+          navigate('/');
+        },
+        onError: (error) => {
+          message.error('게시글 작성에 실패했습니다.');
+          console.error('게시글 작성 실패:', error);
+        },
+      },
+    );
   };
 
   const handleCancel = () => {

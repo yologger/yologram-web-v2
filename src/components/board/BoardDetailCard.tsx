@@ -9,13 +9,12 @@ import {
 } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Avatar, Button, Card, Divider, Space, Tag, Typography } from 'antd';
-import type { GetBoardResponse } from '../../apis/bms';
 import type { BoardData } from '../../models/board.model';
 
 const { Text, Paragraph, Title } = Typography;
 
 interface BoardDetailCardProps {
-  boardData: BoardData | GetBoardResponse;
+  boardData: BoardData;
   onBack: () => void;
   onEdit: () => void;
   onDelete: () => void;
