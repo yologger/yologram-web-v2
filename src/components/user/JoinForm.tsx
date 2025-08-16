@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
-import type { JoinData } from '../../apis/auth';
+import type { JoinRequest } from '../../apis/ums';
 
 const { Title } = Typography;
 
 interface IProps {
-  onSubmit: (data: JoinData) => void;
+  onSubmit: (data: JoinRequest) => void;
   onCancel: () => void;
   loading?: boolean;
 }
 
 export default function JoinForm({ onSubmit, onCancel, loading = false }: IProps) {
-  const [form] = Form.useForm<JoinData>();
+  const [form] = Form.useForm<JoinRequest>();
 
-  const handleSubmit = (values: JoinData) => {
+  const handleSubmit = (values: JoinRequest) => {
     onSubmit(values);
   };
 

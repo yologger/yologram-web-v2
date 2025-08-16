@@ -10,13 +10,21 @@ const umsAPI = axios.create({
 });
 
 export * from './join.api';
+export * from './login.api';
 
 // 요청 인터셉터 (토큰 추가 등)
 umsAPI.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('auth');
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      try {
+        const authData = JSON.parse(token);
+        if (authData?.token) {
+          config.headers.Authorization = `Bearer ${authData.token}`;
+        }
+      } catch (error) {
+        console.error('Failed to parse auth data:', error);
+      }
     }
     return config;
   },
@@ -33,7 +41,7 @@ umsAPI.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       // 토큰 만료 시 로그인 페이지로 리다이렉트
-      localStorage.removeItem('token');
+      localStorage.removeItem('auth');
       window.location.href = '/login';
     }
     return Promise.reject(error);

@@ -1,20 +1,15 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
+import type { LoginRequest } from '../apis/ums';
 import LoginForm from '../components/user/LoginForm';
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
+import { useLoginMutation } from '../queries/ums/useLogin.mutation';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { mutate: login } = useLoginMutation();
 
-  const handleSubmit = (values: LoginFormValues) => {
-    console.log('Login form values:', values);
-    // 여기에 로그인 로직 추가
-    // 로그인 성공 시 홈페이지로 이동
-    navigate('/');
+  const handleSubmit = (values: LoginRequest) => {
+    login(values);
   };
 
   const handleCancel = () => {

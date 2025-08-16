@@ -2,10 +2,12 @@ import { MenuOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Button, Drawer, Modal } from 'antd';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../../stores/auth.store';
 
 export default function Header() {
-  const isLoggedIn = false;
+  const [authStore, setAuthStore] = useAuthStore();
+  const navigate = useNavigate();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -14,9 +16,10 @@ export default function Header() {
   };
 
   const handleLogoutConfirm = () => {
-    // TODO: Implement actual logout logic
-    console.log('User logged out');
+    setAuthStore(null);
     setIsLogoutModalOpen(false);
+    // 홈페이지로 리다이렉트
+    navigate('/');
   };
 
   const handleLogoutCancel = () => {
@@ -48,28 +51,25 @@ export default function Header() {
 
   const renderAuthButtons = () => (
     <>
-      {isLoggedIn ? (
+      {authStore ? (
         <>
-          <Button type="default" onClick={handleLogout} block>
+          <UserInfo>
+            <span>안녕하세요, {authStore?.nickname || authStore?.name || '사용자'}님</span>
+          </UserInfo>
+          <Button type="default" onClick={handleLogout}>
             Logout
           </Button>
           <Link to="/settings">
-            <Button type="primary" block>
-              Settings
-            </Button>
+            <Button type="primary">Settings</Button>
           </Link>
         </>
       ) : (
         <>
           <Link to="/join">
-            <Button type="primary" block>
-              Join
-            </Button>
+            <Button type="primary">Join</Button>
           </Link>
           <Link to="/login">
-            <Button type="default" block>
-              Login
-            </Button>
+            <Button type="default">Login</Button>
           </Link>
         </>
       )}
@@ -192,4 +192,16 @@ const MobileMenuTitle = styled.h3`
   color: #262626;
   border-bottom: 1px solid #f0f0f0;
   padding-bottom: 8px;
+`;
+
+const UserInfo = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #595959;
+  margin-right: 8px;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;

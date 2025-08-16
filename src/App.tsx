@@ -5,8 +5,8 @@ import koKR from 'antd/locale/ko_KR';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import Layout from './components/common/Layout';
 import Router from './Router';
-import { global } from './styles/global';
-import { reset } from './styles/reset';
+import { global } from './styles/global.style';
+import { reset } from './styles/reset.style';
 
 // QueryClient 인스턴스 생성 (react-query useQuery 사용 시 필요)
 const queryClient = new QueryClient({

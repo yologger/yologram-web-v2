@@ -1,19 +1,15 @@
 import styled from '@emotion/styled';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
+import type { LoginRequest } from '../../apis/ums';
 
 const { Title } = Typography;
 
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
-
-interface LoginFormProps {
-  onSubmit: (values: LoginFormValues) => void;
+interface IProps {
+  onSubmit: (values: LoginRequest) => void;
   onCancel: () => void;
 }
 
-const LoginForm = ({ onSubmit, onCancel }: LoginFormProps) => {
+const LoginForm = ({ onSubmit, onCancel }: IProps) => {
   const [form] = Form.useForm();
 
   const handleCancel = () => {

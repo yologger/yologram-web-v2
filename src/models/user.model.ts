@@ -1,7 +1,8 @@
-export interface JoinData {
+export interface UserData {
+  uid: number;
   email: string;
   name: string;
   nickname: string;
-  password: string;
-  confirmPassword: string;
+  accessToken: string;
+  avatar?: string;
 }
