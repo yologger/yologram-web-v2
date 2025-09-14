@@ -12,6 +12,7 @@ import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ChangePasswordPage from './pages/settings/ChangePasswordPage';
 import SettingsPage from './pages/settings/Settings';
+import ErrorBoundaryPage from './pages/test/ErrorBoundaryPage';
 import TestPage from './pages/test/TestPage';
 
 export default function Router() {
@@ -25,6 +26,7 @@ export default function Router() {
       <Route path="/boards/:id/edit" element={<BoardEditPage />} />
       <Route path="/boards/:id" element={<BoardDetailPage />} />
       <Route path="/test" element={<TestPage />} />
+      <Route path="/test/errorboundary" element={<ErrorBoundaryPage />} />
       <Route path="/antd/buttons" element={<ButtonsPage />} />
       <Route path="/antd/modal" element={<ModalPage />} />
       <Route path="/antd/notification" element={<NotificationPage />} />
