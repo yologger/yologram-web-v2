@@ -1,6 +1,7 @@
+import '@ant-design/v5-patch-for-react-19';
 import { Global } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ConfigProvider } from 'antd';
+import { App as AntdApp, ConfigProvider } from 'antd';
 import koKR from 'antd/locale/ko_KR';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import Layout from './components/common/Layout';
@@ -24,11 +25,13 @@ export default function App() {
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <ConfigProvider locale={koKR}>
-          <Global styles={reset} />
-          <Global styles={global} />
-          <Layout>
-            <Router />
-          </Layout>
+          <AntdApp>
+            <Global styles={reset} />
+            <Global styles={global} />
+            <Layout>
+              <Router />
+            </Layout>
+          </AntdApp>
         </ConfigProvider>
       </QueryClientProvider>
     </ErrorBoundary>

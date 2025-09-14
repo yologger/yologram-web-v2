@@ -1,6 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 import ButtonsPage from './pages/antd/ButtonsPage';
 import ModalPage from './pages/antd/ModalPage';
+import NotificationPage from './pages/antd/NotificationPage';
+import ToastPage from './pages/antd/ToastPage';
 import BoardDetailPage from './pages/board/BoardDetailPage';
 import BoardEditPage from './pages/board/BoardEditPage';
 import BoardNewPage from './pages/board/BoardNewPage';
@@ -25,6 +27,8 @@ export default function Router() {
       <Route path="/test" element={<TestPage />} />
       <Route path="/antd/buttons" element={<ButtonsPage />} />
       <Route path="/antd/modal" element={<ModalPage />} />
+      <Route path="/antd/notification" element={<NotificationPage />} />
+      <Route path="/antd/toast" element={<ToastPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

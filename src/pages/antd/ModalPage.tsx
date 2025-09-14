@@ -1,4 +1,4 @@
-import { Button, Divider, Space, Typography } from 'antd';
+import { Button, Divider, message, Space, Typography } from 'antd';
 import { useState } from 'react';
 import TestFormModal from '../../components/test/TestFormModal';
 
@@ -17,6 +17,7 @@ const ModalPage = () => {
 
   const handleSubmit = (values: { email: string; password: string }) => {
     console.log('Form submitted with values:', values);
+    message.success('폼이 성공적으로 제출되었습니다!');
     setIsModalOpen(false);
   };
 
@@ -33,12 +34,6 @@ const ModalPage = () => {
       <Divider />
 
       <TestFormModal open={isModalOpen} onCancel={handleCloseModal} onSubmit={handleSubmit} />
-
-      <Title level={3}>Button Types</Title>
-      <Space wrap>
-        <Button type="primary">Primary Button</Button>
-      </Space>
-      <Divider />
     </div>
   );
 };
