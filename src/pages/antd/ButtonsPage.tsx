@@ -3,7 +3,7 @@ import { Button, Divider, Space, Typography } from 'antd';
 
 const { Title } = Typography;
 
-const AntdPage = () => {
+const ButtonsPage = () => {
   return (
     <div style={{ padding: '24px' }}>
       <Title level={2}>Antd Button Examples</Title>
@@ -125,4 +125,4 @@ const AntdPage = () => {
   );
 };
 
-export default AntdPage;
+export default ButtonsPage;

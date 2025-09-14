@@ -1,4 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
+import ButtonsPage from './pages/antd/ButtonsPage';
+import ModalPage from './pages/antd/ModalPage';
 import BoardDetailPage from './pages/board/BoardDetailPage';
 import BoardEditPage from './pages/board/BoardEditPage';
 import BoardNewPage from './pages/board/BoardNewPage';
@@ -8,7 +10,6 @@ import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import ChangePasswordPage from './pages/settings/ChangePasswordPage';
 import SettingsPage from './pages/settings/Settings';
-import AntdPage from './pages/test/AntdPage';
 import TestPage from './pages/test/TestPage';
 
 export default function Router() {
@@ -22,7 +23,8 @@ export default function Router() {
       <Route path="/boards/:id/edit" element={<BoardEditPage />} />
       <Route path="/boards/:id" element={<BoardDetailPage />} />
       <Route path="/test" element={<TestPage />} />
-      <Route path="/antd" element={<AntdPage />} />
+      <Route path="/antd/buttons" element={<ButtonsPage />} />
+      <Route path="/antd/modal" element={<ModalPage />} />
       <Route path="/settings" element={<SettingsPage />} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
