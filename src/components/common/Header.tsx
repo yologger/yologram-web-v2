@@ -49,6 +49,41 @@ export default function Header() {
     </>
   );
 
+  const renderTestLinks = () => (
+    <>
+      <Link to="/test">
+        <Button type="text" block style={{ color: '#c7c7c7' }}>
+          /test
+        </Button>
+      </Link>
+      <Link to="/test/errorboundary">
+        <Button type="text" block style={{ color: '#c7c7c7' }}>
+          /test/errorboundary
+        </Button>
+      </Link>
+      <Link to="/antd/buttons">
+        <Button type="text" block style={{ color: '#c7c7c7' }}>
+          /antd/buttons
+        </Button>
+      </Link>
+      <Link to="/antd/modal">
+        <Button type="text" block style={{ color: '#c7c7c7' }}>
+          /antd/modal
+        </Button>
+      </Link>
+      <Link to="/antd/notification">
+        <Button type="text" block style={{ color: '#c7c7c7' }}>
+          /antd/notification
+        </Button>
+      </Link>
+      <Link to="/antd/toast">
+        <Button type="text" block style={{ color: '#c7c7c7' }}>
+          /antd/toast
+        </Button>
+      </Link>
+    </>
+  );
+
   const renderAuthButtons = () => (
     <>
       {authStore ? (
@@ -82,6 +117,7 @@ export default function Header() {
         <Section>
           <LogoLink to="/">Yologram</LogoLink>
           <DesktopLinks>{renderNavigationLinks()}</DesktopLinks>
+          <DesktopLinks>{renderTestLinks()}</DesktopLinks>
         </Section>
 
         <Section>

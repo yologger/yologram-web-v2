@@ -4,7 +4,7 @@ import { useState } from 'react';
 import ErrorBoundary from '../../components/common/ErrorBoundary';
 import ErrorBoundaryModal from '../../components/common/ErrorBoundaryModal';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 // 에러를 발생시키는 컴포넌트
 const ErrorComponent = () => {
@@ -12,7 +12,7 @@ const ErrorComponent = () => {
 
   if (shouldError) {
     // 의도적으로 에러 발생
-    throw new Error('이것은 테스트 에러입니다');
+    throw new Error('이것은 테스트 에러입니다!');
   }
 
   return (
@@ -36,7 +36,6 @@ const ErrorBoundaryPage = () => {
       <Title level={2}>ErrorBoundaryPage</Title>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {/* 기존 ErrorBoundary (전체 화면 에러) */}
-
         <ErrorBoundary>
           <ErrorComponent />
         </ErrorBoundary>
