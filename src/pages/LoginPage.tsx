@@ -1,15 +1,16 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import type { LoginRequest } from '../apis/ums';
+
+import type { LoginRequest } from '../apis/auth';
 import LoginForm from '../components/user/LoginForm';
 import { useLoginMutation } from '../queries/ums/useLogin.mutation';
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { mutate: login } = useLoginMutation();
+  const { mutate: login, isPending } = useLoginMutation();
 
-  const handleSubmit = (values: LoginRequest) => {
-    login(values);
+  const handleSubmit = (request: LoginRequest) => {
+    login(request);
   };
 
   const handleCancel = () => {
@@ -18,7 +19,7 @@ const LoginPage = () => {
 
   return (
     <Container>
-      <LoginForm onSubmit={handleSubmit} onCancel={handleCancel} />
+      <LoginForm onSubmit={handleSubmit} onCancel={handleCancel} loading={isPending} />
     </Container>
   );
 };

@@ -1,7 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
+import { message, notification } from 'antd';
 import type { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { join, login, type JoinRequest, type JoinResponse } from '../../apis/ums';
+import { login } from '../../apis/auth';
+import { getApiErrorResponse } from '../../apis/base';
+import { join, type JoinRequest, type JoinResponse } from '../../apis/ums';
 import { useAuthStore } from '../../stores/auth.store';
 
 export const useJoinMutation = () => {
@@ -9,15 +12,15 @@ export const useJoinMutation = () => {
   const [, setAuth] = useAuthStore();
 
   return useMutation<JoinResponse, AxiosError, JoinRequest>({
-    mutationFn: join,
-    onSuccess: async (data: JoinResponse, variables: JoinRequest) => {
-      console.log('회원가입 성공:', data);
-
+    mutationFn: (request: JoinRequest) => join(request),
+    onSuccess: async (response: JoinResponse, request: JoinRequest) => {
       try {
+        message.success('회원가입이 완료되었습니다.');
+
         // 회원가입 성공 후 같은 정보로 자동 로그인
         const loginResponse = await login({
-          email: variables.email,
-          password: variables.password,
+          email: request.email,
+          password: request.password,
         });
 
         const { accessToken, uid, email, name, nickname } = loginResponse.data;
@@ -31,27 +34,50 @@ export const useJoinMutation = () => {
           nickname,
         });
 
-        console.log('자동 로그인 성공');
+        message.success(nickname + '님, 반갑습니다.');
 
         // 홈페이지로 리다이렉트
         navigate('/');
       } catch (loginError) {
-        console.error('자동 로그인 실패:', loginError);
         // 자동 로그인 실패 시 로그인 페이지로 이동
+        const { errorCode } = getApiErrorResponse(loginError as AxiosError);
+        switch (errorCode) {
+          case 'METHOD_ARGUMENT_NOT_VALID':
+            message.error('입력값이 유효하지 않습니다');
+            break;
+          case 'USER_NOT_FOUND':
+            message.error('사용자가 존재하지 않습니다');
+            break;
+          case 'AUTH_WRONG_PASSWORD':
+            message.error('잘못된 비밀번호입니다.');
+            break;
+          default:
+            notification.error({
+              message: '문제가 발생했습니다',
+              description: '죄송합니다. 예상치 못한 오류가 발생했습니다.',
+              placement: 'top',
+              showProgress: true,
+            });
+            break;
+        }
         navigate('/login');
       }
     },
     onError: (error: AxiosError) => {
-      console.error('회원가입 실패:', error);
-
-      // 에러 메시지 표시 (추후 toast나 alert 컴포넌트로 대체 가능)
-      const errorMessage =
-        error.response?.data &&
-        typeof error.response.data === 'object' &&
-        'message' in error.response.data
-          ? (error.response.data as { message: string }).message
-          : '회원가입에 실패했습니다.';
-      alert(errorMessage);
+      const { errorCode } = getApiErrorResponse(error);
+      switch (errorCode) {
+        case 'USER_DUPLICATE':
+          message.error('이미 존재하는 이메일입니다.');
+          break;
+        default:
+          notification.error({
+            message: '문제가 발생했습니다',
+            description: '죄송합니다. 예상치 못한 오류가 발생했습니다.',
+            placement: 'top',
+            showProgress: true,
+          });
+          break;
+      }
     },
   });
 };

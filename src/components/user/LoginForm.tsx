@@ -7,10 +7,15 @@ const { Title } = Typography;
 interface IProps {
   onSubmit: (values: LoginRequest) => void;
   onCancel: () => void;
+  loading?: boolean;
 }
 
-const LoginForm = ({ onSubmit, onCancel }: IProps) => {
+const LoginForm = ({ onSubmit, onCancel, loading = false }: IProps) => {
   const [form] = Form.useForm();
+
+  const handleSubmit = (request: LoginRequest) => {
+    onSubmit(request);
+  };
 
   const handleCancel = () => {
     form.resetFields();
@@ -22,7 +27,16 @@ const LoginForm = ({ onSubmit, onCancel }: IProps) => {
       <StyledSpace direction="vertical" size="large">
         <StyledTitle level={2}>로그인</StyledTitle>
 
-        <Form form={form} onFinish={onSubmit} layout="vertical" autoComplete="off">
+        <Form
+          form={form}
+          onFinish={handleSubmit}
+          layout="vertical"
+          autoComplete="off"
+          initialValues={{
+            email: 'tester1000@example.com',
+            password: '!2345Qwert',
+          }}
+        >
           <Form.Item
             label="Email"
             name="email"
@@ -43,11 +57,18 @@ const LoginForm = ({ onSubmit, onCancel }: IProps) => {
                 type="default"
                 size="large"
                 onClick={handleCancel}
+                disabled={loading}
                 style={{ minWidth: '120px' }}
               >
                 취소
               </Button>
-              <Button type="primary" htmlType="submit" size="large" style={{ minWidth: '120px' }}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                loading={loading}
+                style={{ minWidth: '120px' }}
+              >
                 로그인
               </Button>
             </ButtonGroup>

@@ -13,8 +13,8 @@ interface IProps {
 export default function JoinForm({ onSubmit, onCancel, loading = false }: IProps) {
   const [form] = Form.useForm<JoinRequest>();
 
-  const handleSubmit = (values: JoinRequest) => {
-    onSubmit(values);
+  const handleSubmit = (request: JoinRequest) => {
+    onSubmit(request);
   };
 
   const handleCancel = () => {
@@ -31,14 +31,14 @@ export default function JoinForm({ onSubmit, onCancel, loading = false }: IProps
           form={form}
           onFinish={handleSubmit}
           layout="vertical"
+          autoComplete="off"
           initialValues={{
             email: 'tester1000@example.com',
             name: 'tester1000',
             nickname: 'tester1000',
-            password: '1234Abcd!@',
-            confirmPassword: '1234Abcd!@',
+            password: '!2345Qwert',
+            confirmPassword: '!2345Qwert',
           }}
-          autoComplete="off"
         >
           <Form.Item
             label="이메일"

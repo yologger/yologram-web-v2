@@ -33,19 +33,23 @@ const ErrorBoundaryPage = () => {
 
   return (
     <Container>
-      <Title level={2}>ErrorBoundaryPage</Title>
+      <Title level={2}>ErrorBoundary Page</Title>
       <Space direction="vertical" size="large" style={{ width: '100%' }}>
         {/* 기존 ErrorBoundary (전체 화면 에러) */}
         <ErrorBoundary>
+          <Title level={3}>ErrorBoundary</Title>
           <ErrorComponent />
         </ErrorBoundary>
 
         {/* 새로운 팝업 ErrorBoundary */}
         <ErrorBoundaryModal title="커스텀 에러 제목" onError={handleError}>
+          <Title level={3}>ErrorBoundaryModal</Title>
           <ErrorComponent />
         </ErrorBoundaryModal>
 
-        {/* 서버 에러 시뮬레이션 */}
+        {/* Global ErrorBoundary */}
+        <Title level={3}>Global ErrorBoundary</Title>
+        <ErrorComponent />
       </Space>
     </Container>
   );

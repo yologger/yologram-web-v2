@@ -1,6 +1,5 @@
 import { Button, Divider, message, notification, Space, Typography } from 'antd';
 import { useState } from 'react';
-import TestFormModal from '../../components/test/TestFormModal';
 
 const { Title } = Typography;
 
@@ -262,8 +261,6 @@ const NotificationPage = () => {
           Open TestFormModal
         </Button>
       </Space>
-
-      <TestFormModal open={isModalOpen} onCancel={handleCloseModal} onSubmit={handleSubmit} />
     </div>
   );
 };

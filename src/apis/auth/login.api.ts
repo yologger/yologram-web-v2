@@ -1,4 +1,4 @@
-import umsAPI from '.';
+import authAPI from '.';
 
 export type LoginRequest = {
   email: string;
@@ -18,6 +18,6 @@ export type LoginResponse = {
 const path = '/auth/login';
 
 export const login = async (request: LoginRequest): Promise<LoginResponse> => {
-  const response = await umsAPI.post<LoginResponse>(path, request);
+  const response = await authAPI.post<LoginResponse>(path, request);
   return response.data;
 };

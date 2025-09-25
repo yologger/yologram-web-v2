@@ -1,7 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
+import { message, notification } from 'antd';
 import type { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { login, type LoginRequest, type LoginResponse } from '../../apis/ums';
+import { login, type LoginRequest, type LoginResponse } from '../../apis/auth';
+import { getApiErrorResponse } from '../../apis/base';
 import { useAuthStore } from '../../stores/auth.store';
 
 export const useLoginMutation = () => {
@@ -10,9 +12,9 @@ export const useLoginMutation = () => {
   const [, setAuthStore] = useAuthStore();
 
   return useMutation<LoginResponse, AxiosError, LoginRequest>({
-    mutationFn: (data: LoginRequest) => login(data),
-    onSuccess: (data: LoginResponse) => {
-      const { accessToken, uid, email, name, nickname } = data.data;
+    mutationFn: (request: LoginRequest) => login(request),
+    onSuccess: (response: LoginResponse, request: LoginRequest) => {
+      const { accessToken, uid, email, name, nickname } = response.data;
 
       setAuthStore({
         uid,
@@ -22,18 +24,30 @@ export const useLoginMutation = () => {
         nickname,
       });
 
+      message.success(nickname + '님, 반갑습니다.');
       navigate('/');
     },
     onError: (error: AxiosError) => {
-      console.error('Login failed:', error);
-
-      const errorMessage =
-        error.response?.data &&
-        typeof error.response.data === 'object' &&
-        'message' in error.response.data
-          ? (error.response.data as { message: string }).message
-          : '로그인에 실패했습니다.';
-      alert(errorMessage);
+      const { errorCode } = getApiErrorResponse(error);
+      switch (errorCode) {
+        case 'METHOD_ARGUMENT_NOT_VALID':
+          message.error('입력값이 유효하지 않습니다');
+          break;
+        case 'USER_NOT_FOUND':
+          message.error('사용자가 존재하지 않습니다');
+          break;
+        case 'AUTH_WRONG_PASSWORD':
+          message.error('잘못된 비밀번호입니다.');
+          break;
+        default:
+          notification.error({
+            message: '문제가 발생했습니다',
+            description: '죄송합니다. 예상치 못한 오류가 발생했습니다.',
+            placement: 'top',
+            showProgress: true,
+          });
+          break;
+      }
     },
   });
 };

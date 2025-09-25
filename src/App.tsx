@@ -3,7 +3,7 @@ import { Global } from '@emotion/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { App as AntdApp, ConfigProvider } from 'antd';
 import koKR from 'antd/locale/ko_KR';
-import ErrorBoundary from './components/common/ErrorBoundary';
+import ErrorBoundaryModal from './components/common/ErrorBoundaryModal';
 import Layout from './components/common/Layout';
 import Router from './Router';
 import { global } from './styles/global.style';
@@ -22,7 +22,7 @@ const queryClient = new QueryClient({
 
 export default function App() {
   return (
-    <ErrorBoundary>
+    <ErrorBoundaryModal>
       <QueryClientProvider client={queryClient}>
         <ConfigProvider locale={koKR}>
           <AntdApp>
@@ -34,6 +34,6 @@ export default function App() {
           </AntdApp>
         </ConfigProvider>
       </QueryClientProvider>
-    </ErrorBoundary>
+    </ErrorBoundaryModal>
   );
 }

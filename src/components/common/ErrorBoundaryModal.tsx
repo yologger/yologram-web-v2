@@ -74,15 +74,14 @@ class ErrorBoundaryModal extends Component<Props, State> {
 
         {/* 에러 발생 시 모달 표시 */}
         <Modal
-          title={this.props.title || '오류가 발생했습니다'}
           open={this.state.isModalVisible}
           onOk={this.handleModalOk}
           onCancel={this.handleModalCancel}
           footer={[
-            <Button key="retry" type="primary" onClick={this.handleRetry}>
-              다시 시도
-            </Button>,
-            <Button key="reload" onClick={this.handleReload}>
+            // <Button key="retry" type="primary" onClick={this.handleRetry}>
+            //   다시 시도
+            // </Button>,
+            <Button key="reload" type="primary" onClick={this.handleReload}>
               페이지 새로고침
             </Button>,
             <Button key="close" onClick={this.handleModalCancel}>
@@ -95,8 +94,8 @@ class ErrorBoundaryModal extends Component<Props, State> {
           <Space direction="vertical" size="large" style={{ width: '100%' }}>
             <Result
               status="error"
-              title="컴포넌트 오류"
-              subTitle="이 컴포넌트에서 예상치 못한 오류가 발생했습니다."
+              title="문제가 발생했습니다"
+              subTitle="죄송합니다. 예상치 못한 오류가 발생했습니다."
             />
 
             {this.state.error && (
