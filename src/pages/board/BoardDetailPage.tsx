@@ -1,47 +1,56 @@
 import styled from '@emotion/styled';
 import { message, Modal, Spin } from 'antd';
-import type { AxiosError } from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import BoardDetailCard from '../../components/board/BoardDetailCard';
-import type { BoardData } from '../../models/board.model';
+import ErrorComponent from '../../components/error/ErrorComponent';
 import { useGetBoardQuery } from '../../queries/bms';
 
 const BoardDetailPage = () => {
-  const { id } = useParams();
   const navigate = useNavigate();
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const bid = id ? parseInt(id) : 0;
+  const { id } = useParams();
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // id 유효성 검사 (한 번만 검사)
+  const isValidId = id && /^\d+$/.test(id) && parseInt(id) > 0;
+  const boardId = id ? parseInt(id) : 0;
+
+  // Component 마운트되자마자 useGetBoardQuery → 조건부 API 호출
   const {
-    data,
+    data: boardData,
+    isPending,
     isSuccess,
     isError,
     error,
-  }: {
-    data: BoardData | undefined;
-    isSuccess: boolean;
-    isError: boolean;
-    error: AxiosError | null;
-  } = useGetBoardQuery(bid, {
-    enabled: !!id && /^\d+$/.test(id), // id가 존재하고, id가 숫자로만 구성된 문자열일 때만 API 호출을 실행
+  } = useGetBoardQuery(boardId, {
+    // 유효한 id일 때만 API 호출
+    enabled: isValidId,
   });
 
-  useEffect(() => {
-    if (isSuccess && data) {
-      console.log('게시글 조회 성공 데이터:', data);
-    }
-  }, [isSuccess, data]);
+  // 유효하지 않은 id인 경우 홈으로 이동
+  if (!isValidId) {
+    return <Navigate to="/" replace />;
+  }
 
-  useEffect(() => {
-    if (isError && error) {
-      console.log('게시글 조회 실패 데이터:', error.response?.data);
-    }
-  }, [isError, error]);
+  if (isPending) {
+    return (
+      <LoadingContainer>
+        <Spin size="large" tip="게시글을 불러오는 중..." />
+      </LoadingContainer>
+    );
+  }
 
-  if (!id || !/^\d+$/.test(id)) {
-    return <Navigate to="/notfound" replace />;
+  if (isError) {
+    return (
+      <ErrorComponent
+        status="404"
+        title="게시글을 찾을 수 없습니다"
+        subTitle="요청하신 게시글이 존재하지 않거나 삭제되었습니다."
+      />
+    );
   }
 
   const handleEdit = () => {
@@ -49,11 +58,11 @@ const BoardDetailPage = () => {
   };
 
   const handleDelete = () => {
-    setIsDeleteModalOpen(true);
+    setShowDeleteModal(true);
   };
 
   const handleDeleteConfirm = async () => {
-    setDeleteLoading(true);
+    setIsDeleting(true);
     try {
       // Mock API call
       await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -62,41 +71,49 @@ const BoardDetailPage = () => {
     } catch {
       message.error('게시글 삭제에 실패했습니다.');
     } finally {
-      setDeleteLoading(false);
-      setIsDeleteModalOpen(false);
+      setIsDeleting(false);
+      setShowDeleteModal(false);
     }
   };
 
   const handleDeleteCancel = () => {
-    setIsDeleteModalOpen(false);
+    setShowDeleteModal(false);
   };
 
   const handleBack = () => {
     navigate('/');
   };
 
+  // 성공적으로 데이터를 받았을 때만 렌더링
+  if (!boardData) {
+    return (
+      <ErrorComponent
+        status="404"
+        title="게시글을 찾을 수 없습니다"
+        subTitle="요청하신 게시글이 존재하지 않거나 삭제되었습니다."
+        showBackButton={true}
+        showRefreshButton={true}
+        onBack={handleBack}
+        onRefresh={() => window.location.reload()}
+      />
+    );
+  }
+
   return (
     <Container>
-      {data ? (
-        <BoardDetailCard
-          boardData={data}
-          onBack={handleBack}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
-      ) : (
-        <LoadingContainer>
-          <Spin size="large" tip="게시글을 불러오는 중..." />
-        </LoadingContainer>
-      )}
+      <BoardDetailCard
+        boardData={boardData}
+        onBack={handleBack}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+      />
 
-      {/* Delete Confirmation Modal */}
       <Modal
         title="게시글 삭제"
-        open={isDeleteModalOpen}
+        open={showDeleteModal}
         onOk={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
-        confirmLoading={deleteLoading}
+        confirmLoading={isDeleting}
         okText="삭제"
         cancelText="취소"
         okButtonProps={{ danger: true }}

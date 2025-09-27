@@ -12,7 +12,9 @@ export const useLoginMutation = () => {
   const [, setAuthStore] = useAuthStore();
 
   return useMutation<LoginResponse, AxiosError, LoginRequest>({
-    mutationFn: (request: LoginRequest) => login(request),
+    mutationFn: (request: LoginRequest) => {
+      return login(request);
+    },
     onSuccess: (response: LoginResponse, request: LoginRequest) => {
       const { accessToken, uid, email, name, nickname } = response.data;
 

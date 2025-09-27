@@ -18,6 +18,6 @@ export type LoginResponse = {
 const path = '/auth/login';
 
 export const login = async (request: LoginRequest): Promise<LoginResponse> => {
-  const response = await authAPI.post<LoginResponse>(path, request);
-  return response.data;
+  const axiosResponse = await authAPI.post<LoginResponse>(path, request);
+  return axiosResponse.data;
 };
