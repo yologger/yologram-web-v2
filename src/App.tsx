@@ -16,9 +16,6 @@ const queryClient = new QueryClient({
       retry: 1, // 실패 시 1번만 재시도
       // refetchOnWindowFocus: false, // 창 포커스 시 자동 재요청 비활성화
       // staleTime: 5 * 60 * 1000, // 5분 동안 데이터를 캐시에서 사용
-      onError: (error: AxiosError) => {
-        console.error('Query 에러:', error);
-      },
     },
     mutations: {
       retry: 1, // 실패 시 1번만 재시도

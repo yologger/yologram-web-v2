@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Tabs } from 'antd';
-import MyBoardListPage from './MyBoardListPage';
-import EditProfilePage from './MyProfile';
+import MyBoardListPage from './MyBoardList.page';
+import EditProfilePage from './MyProfile.page';
 
 const SettingsPage = () => {
   const tabItems = [

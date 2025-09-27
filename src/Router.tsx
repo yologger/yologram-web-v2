@@ -1,19 +1,19 @@
 import { Route, Routes } from 'react-router-dom';
-import ButtonsPage from './pages/antd/ButtonsPage';
-import ModalPage from './pages/antd/ModalPage';
-import NotificationPage from './pages/antd/NotificationPage';
-import ToastPage from './pages/antd/ToastPage';
-import BoardDetailPage from './pages/board/BoardDetailPage';
-import BoardEditPage from './pages/board/BoardEditPage';
-import BoardNewPage from './pages/board/BoardNewPage';
-import HomePage from './pages/HomePage';
-import JoinPage from './pages/JoinPage';
-import LoginPage from './pages/LoginPage';
-import NotFoundPage from './pages/NotFoundPage';
-import ChangePasswordPage from './pages/settings/ChangePasswordPage';
-import SettingsPage from './pages/settings/Settings';
-import ErrorBoundaryPage from './pages/test/ErrorBoundaryPage';
-import TestPage from './pages/test/TestPage';
+import ButtonsPage from './pages/antd/Buttons.page';
+import ModalPage from './pages/antd/Modal.page';
+import NotificationPage from './pages/antd/Notification.page';
+import ToastPage from './pages/antd/Toast.page';
+import BoardDetailPage from './pages/board/BoardDetail.page';
+import BoardEditPage from './pages/board/BoardEdit.page';
+import BoardNewPage from './pages/board/BoardNew.page';
+import HomePage from './pages/Home.page';
+import JoinPage from './pages/Join.page';
+import LoginPage from './pages/Login.page';
+import NotFoundPage from './pages/NotFound.page';
+import ChangePasswordPage from './pages/settings/ChangePassword.page';
+import SettingsPage from './pages/settings/Settings.page';
+import ErrorBoundaryPage from './pages/test/ErrorBoundary.page';
+import TestPage from './pages/test/Test.page';
 
 export default function Router() {
   return (
