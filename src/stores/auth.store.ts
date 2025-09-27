@@ -9,5 +9,5 @@ type AuthState = {
   accessToken: string;
 };
 
-const authAtom = atomWithStorage<AuthState | null>('auth', null);
+export const authAtom = atomWithStorage<AuthState | null>('auth', null);
 export const useAuthStore = () => useAtom(authAtom);

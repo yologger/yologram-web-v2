@@ -33,7 +33,7 @@ const LoginForm = ({ onSubmit, onCancel, loading = false }: IProps) => {
           layout="vertical"
           autoComplete="off"
           initialValues={{
-            email: 'tester1000@example.com',
+            email: 'tester10000@example.com',
             password: '!2345Qwert',
           }}
         >

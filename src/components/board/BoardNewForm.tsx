@@ -37,7 +37,18 @@ const BoardNewForm = ({ onSubmit, onCancel }: IProps) => {
       <StyledSpace direction="vertical" size="large">
         <StyledTitle level={2}>새 게시글 작성</StyledTitle>
 
-        <Form form={form} layout="vertical" onFinish={onSubmit} autoComplete="off">
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={onSubmit}
+          autoComplete="off"
+          initialValues={{
+            title: 'This is title for testing',
+            content: 'This is content for testing',
+            categories: ['기술', '일상'],
+            tags: ['java', 'spring', 'oracle', 'javascript', 'react'],
+          }}
+        >
           <Form.Item
             label="제목"
             name="title"

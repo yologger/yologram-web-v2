@@ -7,6 +7,5 @@ export type GetBoardResponse = {
 
 export const getBoard = async (boardId: number): Promise<GetBoardResponse> => {
   const axiosResponse = await bmsAPI.get<GetBoardResponse>(`/board/${boardId}`);
-  console.log('axiosResponse', axiosResponse);
   return axiosResponse.data;
 };

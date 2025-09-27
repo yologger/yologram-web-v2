@@ -13,9 +13,7 @@ export type JoinResponse = {
   };
 };
 
-const path = '/user/join';
-
 export const join = async (request: JoinRequest): Promise<JoinResponse> => {
-  const response = await umsAPI.post<JoinResponse>(path, request);
+  const response = await umsAPI.post<JoinResponse>('/user/join', request);
   return response.data;
 };

@@ -1,3 +1,4 @@
+import { LockOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
 
@@ -61,26 +62,36 @@ const MyProfileForm = ({
             <Input size="large" placeholder="닉네임을 입력하세요" />
           </Form.Item>
 
-          <Form.Item style={{ marginBottom: 0, textAlign: 'center' }}>
-            <ButtonGroup>
-              <Button
-                type="default"
-                size="large"
-                onClick={onPasswordChange}
-                style={{ minWidth: '120px' }}
-              >
-                비밀번호 변경
-              </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-                size="large"
-                loading={loading}
-                style={{ minWidth: '120px' }}
-              >
-                저장
-              </Button>
-            </ButtonGroup>
+          <Form.Item
+            style={{ marginBottom: 0 }}
+            wrapperCol={{
+              span: 24,
+              style: {
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+              },
+            }}
+          >
+            <Button
+              danger
+              type="primary"
+              size="large"
+              onClick={onPasswordChange}
+              icon={<LockOutlined />}
+              style={{ minWidth: '120px' }}
+            >
+              비밀번호 변경
+            </Button>
+            <Button
+              type="primary"
+              htmlType="submit"
+              size="large"
+              loading={loading}
+              style={{ minWidth: '120px' }}
+            >
+              저장
+            </Button>
           </Form.Item>
         </Form>
       </StyledSpace>

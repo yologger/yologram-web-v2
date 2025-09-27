@@ -23,6 +23,5 @@ export const createBoard = async (
   };
 
   const axiosResponse = await bmsAPI.post<CreateBoardResponse>('/board', requestBody);
-  const response = axiosResponse.data;
-  return response;
+  return axiosResponse.data;
 };

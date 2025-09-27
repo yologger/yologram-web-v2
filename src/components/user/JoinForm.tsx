@@ -33,9 +33,9 @@ export default function JoinForm({ onSubmit, onCancel, loading = false }: IProps
           layout="vertical"
           autoComplete="off"
           initialValues={{
-            email: 'tester1000@example.com',
-            name: 'tester1000',
-            nickname: 'tester1000',
+            email: 'tester10000@example.com',
+            name: 'tester10000',
+            nickname: 'tester10000',
             password: '!2345Qwert',
             confirmPassword: '!2345Qwert',
           }}

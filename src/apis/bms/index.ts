@@ -1,5 +1,9 @@
 import axios from 'axios';
+import { getDefaultStore } from 'jotai';
+import { authAtom } from '../../stores/auth.store';
+
 const API = import.meta.env.VITE_APP_API;
+const AUTH_TOKEN_KEY = import.meta.env.VITE_APP_USER_AUTH_TOKEN_KEY || 'X-YOLOGRAM-USER-AUTH-TOKEN';
 
 const bmsAPI = axios.create({
   baseURL: `${API}/api/bms/v1`,
@@ -11,36 +15,38 @@ const bmsAPI = axios.create({
 
 export * from './getBoard.api';
 
-// // 요청 인터셉터 (토큰 추가 등)
-// umsAPI.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem('auth');
-//     if (token) {
-//       try {
-//         const authData = JSON.parse(token);
-//         if (authData?.token) {
-//           config.headers.Authorization = `Bearer ${authData.token}`;
-//         }
-//       } catch (error) {
-//         console.error('Failed to parse auth data:', error);
-//       }
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   },
-// );
+// 요청 인터셉터
+bmsAPI.interceptors.request.use(
+  (config) => {
+    const store = getDefaultStore();
+    const authState = store.get(authAtom);
 
-// // 응답 인터셉터 (에러 처리 등)
-// umsAPI.interceptors.response.use(
+    // 로그인 정보가 없으면 로그인 페이지로 이동
+    if (!authState?.accessToken) {
+      window.location.href = '/login';
+      return Promise.reject(new Error('인증 정보가 없습니다.'));
+    }
+
+    // 토큰이 있으면 헤더에 추가
+    config.headers[AUTH_TOKEN_KEY] = authState.accessToken;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
+
+// 응답 인터셉터 (에러 처리 등)
+// bmsAPI.interceptors.response.use(
 //   (response) => {
 //     return response;
 //   },
 //   (error) => {
+//     // token이 만료된 경우
 //     if (error.response?.status === 401) {
-//       // 토큰 만료 시 로그인 페이지로 리다이렉트
-//       localStorage.removeItem('auth');
+//       // 토큰 만료 시 Jotai store 초기화 및 로그인 페이지로 리다이렉트
+//       const store = getDefaultStore();
+//       store.set(authAtom, null); // store 초기화
 //       window.location.href = '/login';
 //     }
 //     return Promise.reject(error);

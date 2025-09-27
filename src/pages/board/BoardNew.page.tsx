@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
 import { message } from 'antd';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BoardNewForm from '../../components/board/BoardNewForm';
 import { useCreateBoardMutation } from '../../queries/bms';
+import { useAuthStore } from '../../stores/auth.store';
 
 interface BoardFormValues {
   title: string;
@@ -14,25 +16,25 @@ interface BoardFormValues {
 const BoardNewPage = () => {
   const navigate = useNavigate();
   const { mutate: createBoard } = useCreateBoardMutation();
+  const [authState] = useAuthStore();
+  const hasRedirected = useRef(false);
+
+  // 컴포넌트 마운트 시 로그인 상태 체크
+  useEffect(() => {
+    if (!authState && !hasRedirected.current) {
+      hasRedirected.current = true;
+      message.info('로그인이 필요합니다.');
+      navigate('/login');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [authState]);
 
   const handleSubmit = (values: BoardFormValues) => {
-    console.log('Board form values:', values);
-
-    const uid = 999;
-    createBoard(
-      { uid, title: values.title, content: values.content },
-      {
-        onSuccess: (data) => {
-          message.success('게시글이 성공적으로 작성되었습니다.');
-          console.log('게시글 작성 성공:', data);
-          navigate('/');
-        },
-        onError: (error) => {
-          message.error('게시글 작성에 실패했습니다.');
-          console.error('게시글 작성 실패:', error);
-        },
-      },
-    );
+    createBoard({
+      uid: authState!.uid,
+      title: values.title,
+      content: values.content,
+    });
   };
 
   const handleCancel = () => {
