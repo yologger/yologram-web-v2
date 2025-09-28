@@ -1,0 +1,25 @@
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: v20.19.2
+          cache: yarn
+      - name: Install packages
+        run: yarn install --frozen-lockfile
+      - name: Yarn build
+        run: yarn build:prod
+      - name: Deploy to S3
+        run: aws s3 sync --acl public-read ./build s3://${{ secrets.AWS_S3_BUCKET_MASTER }}/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_GITHUB_ACTIONS_DEPLOYER_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_GITHUB_ACTIONS_DEPLOYER_SECRET_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
