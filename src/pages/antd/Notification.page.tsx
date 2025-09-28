@@ -4,6 +4,8 @@ import { useState } from 'react';
 const { Title } = Typography;
 
 const NotificationPage = () => {
+  const [api, contextHolder] = notification.useNotification();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -110,7 +112,7 @@ const NotificationPage = () => {
         type="primary"
         size="small"
         onClick={() => {
-          notification.close(key);
+          notification.destroy();
           message.success('알림을 확인했습니다!');
         }}
       >
@@ -126,26 +128,6 @@ const NotificationPage = () => {
       placement: 'topRight',
       duration: 0,
     });
-  };
-
-  // Promise와 함께 사용
-  const showPromiseNotification = () => {
-    const hide = notification.loading({
-      message: '처리 중...',
-      description: '데이터를 저장하고 있습니다.',
-      placement: 'topRight',
-      duration: 0,
-    });
-
-    // 3초 후 성공으로 변경
-    setTimeout(() => {
-      hide();
-      notification.success({
-        message: '저장 완료!',
-        description: '데이터가 성공적으로 저장되었습니다.',
-        placement: 'topRight',
-      });
-    }, 3000);
   };
 
   // 모든 알림 닫기
@@ -194,9 +176,6 @@ const NotificationPage = () => {
         <Button type="default" onClick={showMultipleNotifications}>
           여러 개 동시 표시
         </Button>
-        <Button type="default" onClick={showPromiseNotification}>
-          Promise와 함께 사용
-        </Button>
         <Button type="default" onClick={closeAllNotifications}>
           모든 알림 닫기
         </Button>
@@ -230,37 +209,8 @@ const NotificationPage = () => {
         >
           자동 로그아웃 경고
         </Button>
-        <Button
-          type="default"
-          onClick={() => {
-            const hide = notification.loading({
-              message: '업로드 중...',
-              description: '파일을 서버에 업로드하고 있습니다.',
-              placement: 'topRight',
-              duration: 0,
-            });
-
-            setTimeout(() => {
-              hide();
-              notification.success({
-                message: '업로드 완료',
-                description: '모든 파일이 성공적으로 업로드되었습니다.',
-                placement: 'topRight',
-              });
-            }, 4000);
-          }}
-        >
-          파일 업로드
-        </Button>
       </Space>
       <Divider />
-
-      <Title level={3}>TestFormModal</Title>
-      <Space wrap>
-        <Button type="primary" onClick={handleOpenModal}>
-          Open TestFormModal
-        </Button>
-      </Space>
     </div>
   );
 };

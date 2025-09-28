@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Card, List, Pagination, Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
-import type { Board } from '../models/board.model';
+import type { BoardData } from '../models/board.model';
 import BoardItem from './board/BoardItem';
 
 // const { Title } = Typography;
@@ -11,27 +11,30 @@ interface IProps {
 }
 
 // Mock data generator
-const generateMockData = (page: number, pageSize: number): Board[] => {
-  const boardList: Board[] = [];
+const generateMockData = (page: number, pageSize: number): BoardData[] => {
+  const boardList: BoardData[] = [];
   const startIndex = (page - 1) * pageSize;
 
   for (let i = 0; i < pageSize; i++) {
     const index = startIndex + i;
     boardList.push({
-      id: index + 1,
+      bid: index + 1,
       title: `안녕하세요! 이것은 ${index + 1}번째 게시글입니다. 오늘은 정말 좋은 날씨네요. 산책하기 딱 좋은 날씨입니다. 이런 날에는 커피 한 잔과 함께 책을 읽거나, 친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요? 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?`,
-      author: {
+      content: `이것은 ${index + 1}번째 게시글입니다. 오늘은 정말 좋은 날씨네요. 산책하기 딱 좋은 날씨입니다. 이런 날에는 커피 한 잔과 함께 책을 읽거나, 친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?`,
+      writer: {
+        uid: `user${index + 1}`,
+        nickname: `사용자${index + 1}`,
         name: `사용자${index + 1}`,
         avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=User${index + 1}`,
       },
-      content: `이것은 ${index + 1}번째 게시글입니다. 오늘은 정말 좋은 날씨네요. 산책하기 딱 좋은 날씨입니다. 이런 날에는 커피 한 잔과 함께 책을 읽거나, 친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?친구들과 만나서 이야기 나누는 것도 좋을 것 같아요. 여러분은 이런 날씨에 무엇을 하시나요?`,
-      createdAt: `${Math.floor(Math.random() * 24)}시간 전`,
+      createdDate: `${Math.floor(Math.random() * 24)}시간 전`,
+      modifiedDate: `${Math.floor(Math.random() * 24)}시간 전`,
       categories: ['일상', '날씨'],
       tags: ['산책', '커피', '독서'],
-      stats: {
-        views: Math.floor(Math.random() * 1000) + 50,
-        likes: Math.floor(Math.random() * 100) + 10,
-        comments: Math.floor(Math.random() * 50) + 5,
+      metrics: {
+        viewCount: Math.floor(Math.random() * 1000) + 50,
+        likeCount: Math.floor(Math.random() * 100) + 10,
+        commentCount: Math.floor(Math.random() * 50) + 5,
       },
     });
   }
@@ -40,7 +43,7 @@ const generateMockData = (page: number, pageSize: number): Board[] => {
 };
 
 const MyBoardList = ({ pageSize = 5 }: IProps) => {
-  const [boardList, setBoardList] = useState<Board[]>([]);
+  const [boardList, setBoardList] = useState<BoardData[]>([]);
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);

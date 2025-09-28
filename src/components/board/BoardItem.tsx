@@ -44,12 +44,12 @@ export default function BoardItem({ board }: IProps) {
       <FooterSection>
         <LeftSection>
           <Space wrap>
-            {board.categories.map((category) => (
+            {board.categories?.map((category) => (
               <Tag key={category} color="blue">
                 {category}
               </Tag>
             ))}
-            {board.tags.map((tag) => (
+            {board.tags?.map((tag) => (
               <Tag key={tag} color="default">
                 #{tag}
               </Tag>

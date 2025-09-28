@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
-import type { LoginRequest } from '../../apis/ums';
+import type { LoginRequest } from '../../apis/auth';
 
 const { Title } = Typography;
 

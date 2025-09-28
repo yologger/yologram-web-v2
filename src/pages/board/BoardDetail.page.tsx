@@ -15,7 +15,7 @@ const BoardDetailPage = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   // id 유효성 검사 (한 번만 검사)
-  const isValidId = id && /^\d+$/.test(id) && parseInt(id) > 0;
+  const isValidId = Boolean(id && /^\d+$/.test(id) && parseInt(id) > 0);
   const boardId = id ? parseInt(id) : 0;
 
   // Component 마운트되자마자 useGetBoardQuery → 조건부 API 호출
