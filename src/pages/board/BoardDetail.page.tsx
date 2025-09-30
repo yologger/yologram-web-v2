@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { message, Modal, Spin } from 'antd';
+import type { AxiosError } from 'axios';
 import { useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import BoardDetailCard from '../../components/board/BoardDetailCard';
@@ -22,7 +23,7 @@ const BoardDetailPage = () => {
   const {
     data: boardData,
     isPending,
-    isSuccess,
+    // isSuccess,
     isError,
     error,
   } = useGetBoardQuery(boardId, {
@@ -44,13 +45,9 @@ const BoardDetailPage = () => {
   }
 
   if (isError) {
-    return (
-      <ErrorComponent
-        status="404"
-        title="게시글을 찾을 수 없습니다"
-        subTitle="요청하신 게시글이 존재하지 않거나 삭제되었습니다."
-      />
-    );
+    const errorStatus = error?.response?.status;
+    const errorMessage = error?.message;
+    return buildErrorComponent(error);
   }
 
   const handleEdit = () => {
@@ -150,5 +147,45 @@ const LoadingContainer = styled.div`
     background-color: #ffffff;
   }
 `;
+
+const buildErrorComponent = (error: AxiosError) => {
+  const errorStatus = error?.response?.status;
+  const errorMessage = error?.message;
+
+  switch (errorStatus) {
+    case 404:
+      return (
+        <ErrorComponent
+          status="404"
+          title="게시글을 찾을 수 없습니다"
+          subTitle="요청하신 게시글이 존재하지 않거나 삭제되었습니다."
+        />
+      );
+    case 403:
+      return (
+        <ErrorComponent
+          status="403"
+          title="접근 권한이 없습니다"
+          subTitle="이 게시글에 접근할 권한이 없습니다."
+        />
+      );
+    case 500:
+      return (
+        <ErrorComponent
+          status="500"
+          title="서버 오류가 발생했습니다"
+          subTitle="잠시 후 다시 시도해주세요."
+        />
+      );
+    default:
+      return (
+        <ErrorComponent
+          status="500"
+          title="오류가 발생했습니다"
+          subTitle={errorMessage || '알 수 없는 오류가 발생했습니다.'}
+        />
+      );
+  }
+};
 
 export default BoardDetailPage;
