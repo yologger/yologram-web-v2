@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import type { LoginRequest } from '../apis/auth';
 import LoginForm from '../components/user/LoginForm';
-import { useLoginMutation } from '../queries/ums/useLogin.mutation';
+import { useLoginMutation } from '../queries/auth/useLogin.mutation';
 
 const LoginPage = () => {
   const navigate = useNavigate();

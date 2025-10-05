@@ -3,35 +3,36 @@ import styled from '@emotion/styled';
 import { Button, Drawer, Modal } from 'antd';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../../queries/auth/useLogout.mutation';
 import { useAuthStore } from '../../stores/auth.store';
 
 export default function Header() {
   const [authStore, setAuthStore] = useAuthStore();
+  const { mutate: logout } = useLogoutMutation();
   const navigate = useNavigate();
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   const handleLogout = () => {
-    setIsLogoutModalOpen(true);
+    setShowLogoutModal(true);
   };
 
   const handleLogoutConfirm = () => {
-    setAuthStore(null);
-    setIsLogoutModalOpen(false);
-    // 홈페이지로 리다이렉트
+    setShowLogoutModal(false);
+    logout();
     navigate('/');
   };
 
   const handleLogoutCancel = () => {
-    setIsLogoutModalOpen(false);
+    setShowLogoutModal(false);
   };
 
   const handleMobileMenuOpen = () => {
-    setIsMobileMenuOpen(true);
+    setShowMobileMenu(true);
   };
 
   const handleMobileMenuClose = () => {
-    setIsMobileMenuOpen(false);
+    setShowMobileMenu(false);
   };
 
   const renderNavigationLinks = () => (
@@ -133,7 +134,7 @@ export default function Header() {
         // title="메뉴"
         placement="left"
         onClose={handleMobileMenuClose}
-        open={isMobileMenuOpen}
+        open={showMobileMenu}
         width="80%"
       >
         <MobileMenuContainer>
@@ -151,7 +152,7 @@ export default function Header() {
 
       <Modal
         title="로그아웃"
-        open={isLogoutModalOpen}
+        open={showLogoutModal}
         onOk={handleLogoutConfirm}
         onCancel={handleLogoutCancel}
         okText="로그아웃"

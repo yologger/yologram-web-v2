@@ -13,8 +13,6 @@ const bmsAPI = axios.create({
   },
 });
 
-export * from './getBoard.api';
-
 // 요청 인터셉터
 bmsAPI.interceptors.request.use(
   (config) => {
@@ -67,3 +65,5 @@ bmsAPI.interceptors.request.use(
 // );
 
 export default bmsAPI;
+
+export * from './getBoard.api';
