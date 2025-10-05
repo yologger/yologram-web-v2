@@ -21,14 +21,27 @@ bmsAPI.interceptors.request.use(
     const store = getDefaultStore();
     const authState = store.get(authAtom);
 
-    // 로그인 정보가 없으면 로그인 페이지로 이동
-    if (!authState?.accessToken) {
-      window.location.href = '/login';
-      return Promise.reject(new Error('인증 정보가 없습니다.'));
+    // 인증이 필수인 API들 확인
+    const requiresAuth =
+      // 게시글 작성/수정/삭제
+      (config.url?.includes('/boards') && config.method === 'post') ||
+      (config.url?.includes('/boards') && config.method === 'put') ||
+      (config.url?.includes('/boards') && config.method === 'delete');
+
+    if (requiresAuth) {
+      // 인증이 필수인 path. 토큰 없으면 로그인 페이지로 이동
+      if (!authState?.accessToken) {
+        window.location.href = '/login';
+        return Promise.reject(new Error('인증 정보가 없습니다.'));
+      }
+      config.headers[AUTH_TOKEN_KEY] = authState.accessToken;
+    } else {
+      // 인증이 선택인 path. 토큰이 있으면 헤더에 추가, 없으면 토큰을 추가하지 않고 그냥 호출
+      if (authState?.accessToken) {
+        config.headers[AUTH_TOKEN_KEY] = authState.accessToken;
+      }
     }
 
-    // 토큰이 있으면 헤더에 추가
-    config.headers[AUTH_TOKEN_KEY] = authState.accessToken;
     return config;
   },
   (error) => {
