@@ -1,32 +1,16 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
-import { useEffect } from 'react';
 import type { JoinRequest } from '../apis/ums';
 import JoinForm from '../components/user/JoinForm';
 import { useJoinMutation } from '../queries/ums';
 
 const JoinPage = () => {
   const navigate = useNavigate();
-  const { mutate: join, isPending, isError, error } = useJoinMutation();
+  const { mutate: join, isPending } = useJoinMutation();
 
-  // 회원가입 성공/실패는 useJoinMutation에서 처리됨
-  // 자동 로그인 후 홈페이지로 리다이렉트됨
-
-  const handleSubmit = (data: JoinRequest) => {
-    join(data);
-  };
-
-  useEffect(() => {
-    if (isError) {
-      // JoinPage에서도 Error 처리 가능
-      // console.error('회원가입 실패:', error);
-    }
-  }, [isError, error]);
-
-  const handleCancel = () => {
-    navigate('/');
-  };
+  const handleSubmit = (data: JoinRequest) => join(data);
+  const handleCancel = () => navigate('/');
 
   return (
     <PageContainer>

@@ -13,19 +13,20 @@ export const useJoinMutation = () => {
 
   return useMutation<JoinResponse, AxiosError, JoinRequest>({
     mutationFn: (request: JoinRequest) => join(request),
-    onSuccess: async (response: JoinResponse, request: JoinRequest) => {
+    onSuccess: async (joinResponse: JoinResponse, joinRequest: JoinRequest) => {
       try {
+        // 회원가입 성공 시 (204)
         message.success('회원가입이 완료되었습니다.');
 
-        // 회원가입 성공 후 같은 정보로 자동 로그인
+        // 회원가입 성공 후 같은 정보로 자동 로그인 시도
         const loginResponse = await login({
-          email: request.email,
-          password: request.password,
+          email: joinRequest.email,
+          password: joinRequest.password,
         });
 
         const { accessToken, uid, email, name, nickname } = loginResponse.data;
 
-        // auth store 업데이트 (localStorage와 자동 동기화됨)
+        // 로그인 성공(200) 시, auth store 업데이트
         setAuth({
           uid,
           accessToken,
@@ -36,20 +37,20 @@ export const useJoinMutation = () => {
 
         message.success(nickname + '님, 반갑습니다.');
 
-        // 홈페이지로 리다이렉트
+        // 홈으로 리다렉트
         navigate('/');
       } catch (loginError) {
-        // 자동 로그인 실패 시 로그인 페이지로 이동
+        // 로그인 실패 시, error message 표시 후 로그인 페이지로 이동
         const { errorCode } = getApiErrorResponse(loginError as AxiosError);
         switch (errorCode) {
-          case 'METHOD_ARGUMENT_NOT_VALID':
+          case 'HTTP_REQUEST_ARGUMENT_INVALID':
             message.error('입력값이 유효하지 않습니다');
-            break;
-          case 'USER_NOT_FOUND':
-            message.error('사용자가 존재하지 않습니다');
             break;
           case 'AUTH_WRONG_PASSWORD':
             message.error('잘못된 비밀번호입니다.');
+            break;
+          case 'USER_NOT_FOUND':
+            message.error('사용자가 존재하지 않습니다');
             break;
           default:
             notification.error({
@@ -64,8 +65,12 @@ export const useJoinMutation = () => {
       }
     },
     onError: (error: AxiosError) => {
+      // 회원가입 실패 시, 에러 처리
       const { errorCode } = getApiErrorResponse(error);
       switch (errorCode) {
+        case 'HTTP_REQUEST_ARGUMENT_INVALID':
+          message.error('입력값이 유효하지 않습니다');
+          break;
         case 'USER_DUPLICATE':
           message.error('이미 존재하는 이메일입니다.');
           break;
