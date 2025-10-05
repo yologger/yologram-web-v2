@@ -32,14 +32,14 @@ export const useLoginMutation = () => {
     onError: (error: AxiosError) => {
       const { errorCode } = getApiErrorResponse(error);
       switch (errorCode) {
-        case 'METHOD_ARGUMENT_NOT_VALID':
+        case 'HTTP_REQUEST_ARGUMENT_INVALID':
           message.error('입력값이 유효하지 않습니다');
-          break;
-        case 'USER_NOT_FOUND':
-          message.error('사용자가 존재하지 않습니다');
           break;
         case 'AUTH_WRONG_PASSWORD':
           message.error('잘못된 비밀번호입니다.');
+          break;
+        case 'USER_NOT_FOUND':
+          message.error('사용자가 존재하지 않습니다');
           break;
         default:
           notification.error({
