@@ -27,9 +27,7 @@ const ErrorComponent = () => {
 };
 
 const ErrorBoundaryPage = () => {
-  const handleError = (error: Error) => {
-    console.log('팝업 에러 발생:', error.message);
-  };
+  const handleError = (error: Error) => {};
 
   return (
     <Container>

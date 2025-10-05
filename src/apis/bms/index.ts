@@ -29,7 +29,7 @@ bmsAPI.interceptors.request.use(
     if (requiresAuth) {
       // 인증이 필수인 path. 토큰 없으면 로그인 페이지로 이동
       if (!authState?.accessToken) {
-        window.location.href = '/login';
+        // window.location.href = '/login';
         return Promise.reject(new Error('인증 정보가 없습니다.'));
       }
       config.headers[AUTH_TOKEN_KEY] = authState.accessToken;

@@ -20,21 +20,18 @@ export const useLogoutMutation = () => {
       message.success('로그아웃 되었습니다.');
     },
     onError: (error: AxiosError) => {
+      let errorMessage = '';
       const { errorCode } = getApiErrorResponse(error);
       switch (errorCode) {
         case 'HTTP_REQUEST_ARGUMENT_INVALID':
-          message.error('입력값이 유효하지 않습니다');
+          errorMessage = '입력값이 유효하지 않습니다';
           break;
         case 'USER_NOT_FOUND':
-          message.error('사용자가 존재하지 않습니다');
+          errorMessage = '사용자가 존재하지 않습니다';
           break;
         case 'AUTH_EXPIRED_TOKEN':
         case 'AUTH_INVALID_TOKEN':
-        case 'AUTH_INVALID_TOKEN_OWNER':
-          message.error('토큰이 유효하지 않습니다.');
-          setAuthStore(null);
-          message.success('로그아웃 되었습니다.');
-          navigate('/');
+          errorMessage = '토큰이 유효하지 않습니다';
           break;
         default:
           notification.error({
@@ -45,6 +42,9 @@ export const useLogoutMutation = () => {
           });
           break;
       }
+      setAuthStore(null);
+      message.success('로그아웃 되었습니다.');
+      navigate('/');
     },
   });
 };

@@ -14,9 +14,6 @@ export default function ChangePasswordPage() {
 
   const handleSubmit = async (values: ChangePasswordFormValues) => {
     try {
-      // TODO: API 호출 로직 구현
-      console.log('비밀번호 변경 요청:', values);
-
       // 임시로 성공 메시지 표시
       message.success('비밀번호가 성공적으로 변경되었습니다.');
       navigate('/settings');

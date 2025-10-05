@@ -16,8 +16,6 @@ const EditProfilePage = () => {
   const handleSave = async (values: ProfileFormData) => {
     setLoading(true);
     try {
-      // TODO: API 호출 로직 추가
-      console.log('저장할 데이터:', values);
       await new Promise((resolve) => setTimeout(resolve, 1000)); // API 호출 시뮬레이션
     } catch (error) {
       console.error('저장 실패:', error);

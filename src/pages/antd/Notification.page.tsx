@@ -17,7 +17,6 @@ const NotificationPage = () => {
   };
 
   const handleSubmit = (values: { email: string; password: string }) => {
-    console.log('Form submitted with values:', values);
     message.success('폼이 성공적으로 제출되었습니다!');
     setIsModalOpen(false);
   };

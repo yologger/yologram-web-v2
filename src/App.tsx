@@ -23,7 +23,7 @@ const queryClient = new QueryClient({
   },
 });
 
-export default function App() {
+function App() {
   return (
     <ErrorBoundaryModal>
       <QueryClientProvider client={queryClient}>
@@ -40,3 +40,5 @@ export default function App() {
     </ErrorBoundaryModal>
   );
 }
+
+export default App;

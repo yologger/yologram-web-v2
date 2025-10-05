@@ -1,4 +1,6 @@
+import { Spin } from 'antd';
 import { Route, Routes } from 'react-router-dom';
+import { useAuth } from './hooks/useAuth.hook';
 import ButtonsPage from './pages/antd/Buttons.page';
 import ModalPage from './pages/antd/Modal.page';
 import NotificationPage from './pages/antd/Notification.page';
@@ -16,6 +18,11 @@ import ErrorBoundaryPage from './pages/test/ErrorBoundary.page';
 import TestPage from './pages/test/Test.page';
 
 export default function Router() {
+  const { isAuthInitialized } = useAuth();
+
+  // 인증 초기화가 완료될 때까지 로딩 표시
+  if (!isAuthInitialized) return <Spin size="large" tip="인증 정보 확인 중..." />;
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

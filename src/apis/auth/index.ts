@@ -22,7 +22,7 @@ authAPI.interceptors.request.use(
     const requiresAuth =
       // 게시글 작성/수정/삭제
       config.url?.includes('/logout') && config.method === 'post';
-    // || (config.url?.includes('/validate_token') && config.method === 'post')
+    // || (config.url?.includes('/auth/validate_token') && config.method === 'post')
 
     if (requiresAuth) {
       // 인증이 필수인 path. 토큰 없으면 로그인 페이지로 이동
@@ -47,5 +47,6 @@ authAPI.interceptors.request.use(
 
 export * from './login.api';
 export * from './logout.api';
+export * from './validateToken.api';
 
 export default authAPI;

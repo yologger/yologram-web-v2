@@ -37,7 +37,6 @@ export default function HomePage() {
 const buildErrorComponent = (error: AxiosError) => {
   const errorStatus = error?.response?.status;
   const errorMessage = error?.message;
-  console.log(errorStatus, errorMessage);
 
   switch (errorStatus) {
     case 404:
