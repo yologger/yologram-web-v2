@@ -7,6 +7,7 @@ import {
 import styled from '@emotion/styled';
 import { Avatar, Card, Space, Tag, Typography } from 'antd';
 import Title from 'antd/es/typography/Title';
+import { useNavigate } from 'react-router-dom';
 import type { BoardData } from '../../models/board.model';
 
 const { Text, Paragraph } = Typography;
@@ -16,8 +17,14 @@ interface IProps {
 }
 
 export default function BoardItem({ board }: IProps) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/boards/${board.bid}`);
+  };
+
   return (
-    <StyledCard>
+    <StyledCard onClick={handleClick}>
       {/* Header Section */}
       <HeaderSection>
         <Space>
@@ -82,6 +89,7 @@ const StyledCard = styled(Card)`
   width: 100%;
   margin-bottom: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
 
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
