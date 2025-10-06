@@ -13,36 +13,29 @@ export default function Header() {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-  const handleLogout = () => {
-    setShowLogoutModal(true);
-  };
+  const handleLogout = () => setShowLogoutModal(true);
 
   const handleLogoutConfirm = () => {
     setShowLogoutModal(false);
     logout();
     navigate('/');
+    handleMobileMenuClose(); // Drawer 닫기
   };
 
-  const handleLogoutCancel = () => {
-    setShowLogoutModal(false);
-  };
+  const handleLogoutCancel = () => setShowLogoutModal(false);
 
-  const handleMobileMenuOpen = () => {
-    setShowMobileMenu(true);
-  };
+  const handleMobileMenuOpen = () => setShowMobileMenu(true);
 
-  const handleMobileMenuClose = () => {
-    setShowMobileMenu(false);
-  };
+  const handleMobileMenuClose = () => setShowMobileMenu(false);
 
   const renderNavigationLinks = () => (
     <>
-      <Link to="/">
+      <Link to="/" onClick={handleMobileMenuClose}>
         <Button type="text" block>
           Home
         </Button>
       </Link>
-      <Link to="/boards/new">
+      <Link to="/boards/new" onClick={handleMobileMenuClose}>
         <Button type="text" block>
           Write
         </Button>
@@ -52,32 +45,32 @@ export default function Header() {
 
   const renderTestLinks = () => (
     <>
-      <Link to="/test">
+      <Link to="/test" onClick={handleMobileMenuClose}>
         <Button type="text" block style={{ color: '#c7c7c7' }}>
           /test
         </Button>
       </Link>
-      <Link to="/test/errorboundary">
+      <Link to="/test/errorboundary" onClick={handleMobileMenuClose}>
         <Button type="text" block style={{ color: '#c7c7c7' }}>
           /test/errorboundary
         </Button>
       </Link>
-      <Link to="/antd/buttons">
+      <Link to="/antd/buttons" onClick={handleMobileMenuClose}>
         <Button type="text" block style={{ color: '#c7c7c7' }}>
           /antd/buttons
         </Button>
       </Link>
-      <Link to="/antd/modal">
+      <Link to="/antd/modal" onClick={handleMobileMenuClose}>
         <Button type="text" block style={{ color: '#c7c7c7' }}>
           /antd/modal
         </Button>
       </Link>
-      <Link to="/antd/notification">
+      <Link to="/antd/notification" onClick={handleMobileMenuClose}>
         <Button type="text" block style={{ color: '#c7c7c7' }}>
           /antd/notification
         </Button>
       </Link>
-      <Link to="/antd/toast">
+      <Link to="/antd/toast" onClick={handleMobileMenuClose}>
         <Button type="text" block style={{ color: '#c7c7c7' }}>
           /antd/toast
         </Button>
@@ -85,7 +78,7 @@ export default function Header() {
     </>
   );
 
-  const renderAuthButtons = () => (
+  const renderAuthButtonsDesktop = () => (
     <>
       {authStore ? (
         <>
@@ -112,6 +105,39 @@ export default function Header() {
     </>
   );
 
+  const renderAuthButtonsMobile = () => (
+    <>
+      {authStore ? (
+        <>
+          <UserInfo>
+            <span>안녕하세요, {authStore?.nickname || authStore?.name || '사용자'}님</span>
+          </UserInfo>
+          <Link to="/settings" onClick={handleMobileMenuClose}>
+            <Button type="primary" style={{ width: '100%' }}>
+              Settings
+            </Button>
+          </Link>
+          <Button type="default" onClick={handleLogout}>
+            Logout
+          </Button>
+        </>
+      ) : (
+        <>
+          <Link to="/join" onClick={handleMobileMenuClose}>
+            <Button type="primary" style={{ width: '100%' }}>
+              Join
+            </Button>
+          </Link>
+          <Link to="/login" onClick={handleMobileMenuClose}>
+            <Button type="default" style={{ width: '100%' }}>
+              Login
+            </Button>
+          </Link>
+        </>
+      )}
+    </>
+  );
+
   return (
     <>
       <Container>
@@ -124,7 +150,7 @@ export default function Header() {
         </Section>
 
         <Section>
-          <DesktopLinks>{renderAuthButtons()}</DesktopLinks>
+          <DesktopLinks>{renderAuthButtonsDesktop()}</DesktopLinks>
           <MobileMenuButton>
             <Button type="text" icon={<MenuOutlined />} onClick={handleMobileMenuOpen} />
           </MobileMenuButton>
@@ -138,16 +164,18 @@ export default function Header() {
         onClose={handleMobileMenuClose}
         open={showMobileMenu}
         width="80%"
+        maskClosable={true}
+        keyboard={true}
       >
         <MobileMenuContainer>
           <MobileMenuSection>
-            <MobileMenuTitle>메뉴</MobileMenuTitle>
+            {/* <MobileMenuTitle>메뉴</MobileMenuTitle> */}
             {renderNavigationLinks()}
           </MobileMenuSection>
 
           <MobileMenuSection>
-            <MobileMenuTitle>계정</MobileMenuTitle>
-            {renderAuthButtons()}
+            {/* <MobileMenuTitle>계정</MobileMenuTitle> */}
+            {renderAuthButtonsMobile()}
           </MobileMenuSection>
         </MobileMenuContainer>
       </Drawer>
