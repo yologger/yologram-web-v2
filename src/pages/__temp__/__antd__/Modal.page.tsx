@@ -1,6 +1,6 @@
 import { Button, Divider, message, Space, Typography } from 'antd';
 import { useState } from 'react';
-import TestFormModal from '../../components/test/TestFormModal';
+import TestFormModal from '../../../components/__temp__/TestFormModal';
 
 const { Title } = Typography;
 

@@ -1,10 +1,12 @@
 import { Spin } from 'antd';
 import { Route, Routes } from 'react-router-dom';
 import { useAuth } from './hooks/useAuth.hook';
-import ButtonsPage from './pages/antd/Buttons.page';
-import ModalPage from './pages/antd/Modal.page';
-import NotificationPage from './pages/antd/Notification.page';
-import ToastPage from './pages/antd/Toast.page';
+import ButtonsPage from './pages/__temp__/__antd__/Buttons.page';
+import ModalPage from './pages/__temp__/__antd__/Modal.page';
+import NotificationPage from './pages/__temp__/__antd__/Notification.page';
+import ToastPage from './pages/__temp__/__antd__/Toast.page';
+import ErrorBoundaryPage from './pages/__temp__/__test__/ErrorBoundary.page';
+import TestPage from './pages/__temp__/__test__/Test.page';
 import BoardDetailPage from './pages/board/BoardDetail.page';
 import BoardEditPage from './pages/board/BoardEdit.page';
 import BoardNewPage from './pages/board/BoardNew.page';
@@ -14,8 +16,6 @@ import LoginPage from './pages/Login.page';
 import NotFoundPage from './pages/NotFound.page';
 import ChangePasswordPage from './pages/settings/ChangePassword.page';
 import SettingsPage from './pages/settings/Settings.page';
-import ErrorBoundaryPage from './pages/test/ErrorBoundary.page';
-import TestPage from './pages/test/Test.page';
 
 export default function Router() {
   const { isAuthInitialized } = useAuth();

@@ -4,7 +4,7 @@ import type { AxiosError } from 'axios';
 import { useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import BoardDetailCard from '../../components/board/BoardDetailCard';
-import ErrorComponent from '../../components/error/ErrorComponent';
+import ErrorComponent from '../../components/global/ErrorComponent';
 import { useGetBoardQuery } from '../../queries/bms';
 
 const BoardDetailPage = () => {

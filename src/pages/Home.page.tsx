@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import type { AxiosError } from 'axios';
 import { useCallback } from 'react';
 import BoardList from '../components/board/BoardList';
-import ErrorComponent from '../components/error/ErrorComponent';
+import ErrorComponent from '../components/global/ErrorComponent';
 import { useGetRecentBoardsQuery } from '../queries/bms/getRecentBoards.query';
 
 export default function HomePage() {
@@ -24,7 +24,7 @@ export default function HomePage() {
   }, [hasNextPage, isFetching, fetchNextPage]);
 
   if (isError) {
-    return buildErrorComponent(error);
+    return buildErrorComponent(error as AxiosError);
   }
 
   return (

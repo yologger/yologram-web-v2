@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Card, List, Pagination, Space, Spin } from 'antd';
 import { useEffect, useState } from 'react';
-import type { BoardData } from '../models/board.model';
-import BoardItem from './board/BoardItem';
+import type { BoardData } from '../../models/board.model';
+import BoardItem from './BoardItem';
 
 // const { Title } = Typography;
 

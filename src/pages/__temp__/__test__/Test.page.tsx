@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Button, Card, Space, Typography, message } from 'antd';
 import { useState } from 'react';
-import { Counter } from '../../components/test/Counter';
+import { Counter } from '../../../components/__temp__/Counter';
 
 const { Title, Text } = Typography;
 

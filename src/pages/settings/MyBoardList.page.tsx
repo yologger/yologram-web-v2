@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import MyBoardList from '../../components/MyBoardList';
+import MyBoardList from '../../components/board/MyBoardList';
 
 const MyBoardListPage = () => {
   return (

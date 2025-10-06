@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MyProfileForm from '../../components/MyProfileForm';
+import MyProfileForm from '../../components/form/MyProfileForm';
 
 interface ProfileFormData {
   email: string;

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Button, Card, Space, Typography } from 'antd';
 import { useState } from 'react';
-import ErrorBoundary from '../../components/common/ErrorBoundary';
-import ErrorBoundaryModal from '../../components/common/ErrorBoundaryModal';
+import ErrorBoundary from '../../../components/global/ErrorBoundary';
+import ErrorBoundaryModal from '../../../components/global/ErrorBoundaryModal';
 
 const { Title } = Typography;
 

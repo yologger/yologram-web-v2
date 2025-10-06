@@ -118,7 +118,9 @@ export default function Header() {
         <Section>
           <LogoLink to="/">Yologram</LogoLink>
           <DesktopLinks>{renderNavigationLinks()}</DesktopLinks>
-          <DesktopLinks>{renderTestLinks()}</DesktopLinks>
+          {import.meta.env.MODE === 'development' ? (
+            <DesktopLinks>{renderTestLinks()}</DesktopLinks>
+          ) : null}
         </Section>
 
         <Section>

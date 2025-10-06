@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
 import type { JoinRequest } from '../apis/ums';
-import JoinForm from '../components/user/JoinForm';
+import JoinForm from '../components/form/JoinForm';
 import { useJoinMutation } from '../queries/ums';
 
 const JoinPage = () => {
